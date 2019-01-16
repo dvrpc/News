@@ -87,8 +87,7 @@ body{
     margin: 0;
 }
 #detail-view-img{
-    /* -5% margin-top is a short term hack to get the image to align with the title */
-    margin: -5% 0 0 5%;
+    margin: 0 0 3% 3%;
     border-radius: 10px;
     height: 120px;
     width: 130px;
@@ -110,8 +109,8 @@ body{
 }
 #detail-view-left{
     position: absolute;
-    top: 7%;
-    left: 3%;
+    top: 25px;
+    left: 2%;
 }
 
 /******* Connect with us  *******/

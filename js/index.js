@@ -125,10 +125,10 @@ INPUT:
 OUTPUT:
     <div id="detail-view-container">
         <button id="detail-view-left" class="nav-arrow nav-arrow-left"></button>
-        <h2 id="detail-view-title"></h2>
         <img id="detail-view-img" src="">
+        <h2 id="detail-view-title"></h2>
         <p></p>
-        <a id="detail-view-link" href="">View the Data<button class="nav-arrow nav-arrow-right"></button></a>
+        <a id="detail-view-link" href="">View the Data</a>
     </div>     
 */ 
 createDetailView = post => {
@@ -166,8 +166,8 @@ createDetailView = post => {
 
     // append children
     fragment.appendChild(detailViewLeftArrow)
-    fragment.appendChild(detailViewTitle)
     fragment.appendChild(detailViewImg)
+    fragment.appendChild(detailViewTitle)
     fragment.appendChild(detailViewParagraph)
     fragment.appendChild(detailViewLink)
     detailViewContainer.appendChild(fragment)
