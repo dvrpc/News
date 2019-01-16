@@ -1,0 +1,138 @@
+/******* General Selectors *******/
+body{
+    font-size: 16px;
+}
+.shadow{
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+.nav-arrow{
+    background: transparent;
+    box-sizing: border-box;
+    margin: 0 auto;
+    height: 17px;
+    width: 15px;
+    border: solid #121212;
+    border-width: 0px 2px 2px 0px;
+    transition: border-width 150ms ease-in-out;
+}
+.nav-arrow:hover{
+    border-bottom-width: 4px;
+    border-right-width: 4px;
+}
+.nav-arrow-left{
+    transform: rotate(135deg);
+}
+.nav-arrow-right{
+    transform: rotate(315deg);
+}
+
+/******* Main content box *******/
+#updates-box{
+    height: 400px;
+    background: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+}
+.updates-item{
+    width: 25%;
+    height: 40%;
+    margin: 2%;
+}
+.updates-item-img-container{
+    position: relative;
+    border-radius: 10px;
+    width: 100%;
+    height: 80%;
+}
+.updates-item-img-type{
+    position: absolute;
+    margin: auto;
+    width: 80%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.updates-item-title{
+    border: none;
+    background: transparent;
+    text-align: left;
+    text-decoration: underline;
+    margin: 0;
+    font-size: 0.8em;
+}
+
+/******* Updates Box Detail View  *******/
+#detail-view-container{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: 5% 10%;
+}
+#detail-view-title{
+    margin: 0;
+}
+#detail-view-img{
+    /* -5% margin-top is a short term hack to get the image to align with the title */
+    margin: -5% 0 5% 5%;
+    border-radius: 10px;
+    height: 140px;
+    width: 140px;
+    float: right;
+}
+#detail-view-link{
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+}
+#detail-view-left{
+    position: absolute;
+    top: 10%;
+    left: 5%;
+}
+
+/******* Connect with us  *******/
+#connect-with-us{
+    margin-top: 5%;
+    padding: 0 10%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #fff;
+}
+#connect-with-us h2{
+    color: #2d799a;
+    margin-right: 2%;
+}
+.connect-imgs{
+    height: 25px;
+    width: 25px;
+}
+.vr{
+    border: thin solid #2d799a;
+    margin: 0 2% 0 2%;
+    height: 35px;
+}
+
+
+/******* Media Queries *******/
+@media all and (max-width: 800px) {
+    #updates-box{
+        align-content: space-between;
+    }
+    .updates-item-img-container{
+        height: 60%;
+    }
+    #detail-view-img{
+        /* 
+            subpage media query is overruling the margin and float properties which throws off the whole section on mobile
+            and since the subpage jawn is has margin and float w/ !important, I can't overrule it with !important so that's cool...
+        */
+        margin: -10% 0 5% 5% !important;
+        float: right !important;
+        height: 110px;
+        width: 110px;
+    }
+}
