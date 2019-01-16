@@ -3,42 +3,42 @@ const dummyData = [
     {
         img: 'https://i.pinimg.com/236x/73/fe/29/73fe29529249bd1b3b6d6fcc638fb342--landscape-architects-tropical-paradise.jpg',
         type: 'Event',
-        title: 'The name of the post',
+        title: 'Share-A-Ride Ridematch Service Makes Commuting Easier in Southeastern PA',
         link: 'www.catsinsinks.com',
         blurb: 'Just my luck, no ice. Eventually, you do plan to have dinosaurs on your dinosaur tour, right? Is this my espresso machine?'
     },
     {
         img: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/2011-05-2711:13/road-trip-1446065101.jpg?resize=768:*',
         type: 'Press Release',
-        title: 'The excessively long name of the long post with a long name',
+        title: 'Making Trails Happen',
         link: 'www.catsinsinks.com',
         blurb: 'Life finds a way. Must go faster... go, go, go, go, go! Is this my espresso machine? Wh-what is-h-how did you get my espresso machine?'
     },
     {
-        img: 'https://lookingglassphoto.com/wp-content/uploads/2017/09/Tony-Sweet-landscape-Acadia-rocks-second-200x200.jpg',
+        img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBdvehmlIsfvePeuVjVNk_GlFy28WM7oB8hCYwvS3gA6oy6xAI',
         type: 'New Report',
-        title: 'Short Name',
+        title: 'Future of Moving People and Goods',
         link: 'www.catsinsinks.com',
         blurb: 'Life finds a way. You know what? It is beets.'
     },
     {
         img: 'https://www.asla.org/2015awards/img/96483_Lead.jpg',
-        type: 'Announcement',
-        title: 'Things and Stuff',
+        title: 'New Data Text Here',
+        type: 'New Data',
         link: 'www.catsinsinks.com',
         blurb: 'This post comes fully loaded. AM/FM radio, reclining bucket seats, and... power windows. Yeah, but your scientists were so preoccupied with whether or not they could, they didnt stop to think if they should. Remind me to thank John for a lovely weekend. Jaguar shark! So tell me - does it really exist? You know what? It is beets. Ive crashed into a beet truck.'
     },
     {
         img: 'https://d3e1o4bcbhmj8g.cloudfront.net/photos/736528/big_square/788b965e743b763d785f250c91021a0abb7167e8.jpg',
-        type: 'New Data',
-        title: 'A Different Name',
+        type: 'Announcement',
+        title: 'FY 2018 DVRPC Annual Report',
         link: 'www.catsinsinks.com',
         blurb: 'Do you have any idea how long it takes those cups to decompose. Hey, you know how Im, like, always trying to save the planet? Heres my chance. God creates dinosaurs.'
     },
     {
         img: 'https://d3e1o4bcbhmj8g.cloudfront.net/photos/297107/big_square/1486b240629b74c53886b7210539fd3901c33167.jpg',
         type: 'Funding Available',
-        title: 'This is Also a Name',
+        title: 'Now hiring! Transportation Planner, Freight & Aviation Programs',
         link: 'www.catsinsinks.com',
         blurb: 'God destroys dinosaurs. God creates Man. Man destroys God. Man creates Dinosaurs.'
     }
@@ -46,12 +46,15 @@ const dummyData = [
 
 // lookup table to match post type with corresponding img (placeholder img for now)
 const typeImages = {
-    'Event': './img/1a_ColorPrimarySmall.png',
-    'Press Release': './img/1a_ColorPrimarySmall.png',
-    'Funding Available': './img/1a_ColorPrimarySmall.png',
-    'New Data': './img/1a_ColorPrimarySmall.png',
-    'New Report': './img/1a_ColorPrimarySmall.png',
-    'Announcement': './img/1a_ColorPrimarySmall.png'
+    'Event': './img/types/Event.png',
+    'Press Release': './img/types/PressRelease.png',
+    'Funding Available': './img/types/FundingAvailable.png',
+    'New Data': './img/types/NewData.png',
+    'New Report': './img/types/NewReport.png',
+    'Announcement': './img/types/Announcement.png',
+    'Business Opportunity': './img/types/BusinessOpportunity.png',
+    'New Webmap': './img/types/NewWebmap.png',
+    'Public Meeting': './img/types/PublicMeeting.png'
 }
 
 // get a handle on the main box
@@ -141,7 +144,6 @@ createDetailView = post => {
     const detailViewImg = document.createElement('img')
     const detailViewParagraph = document.createElement('p') // eventually this will call a function that loops thru the blurb field and outputs the correct # of <p> tags
     const detailViewLink = document.createElement('a')
-    const detailViewRightArrow = document.createElement('button')
 
     // add classes and ids
     detailViewContainer.id = 'detail-view-container'
@@ -150,7 +152,6 @@ createDetailView = post => {
     detailViewTitle.id = 'detail-view-title'
     detailViewImg.id = 'detail-view-img'
     detailViewLink.id="detail-view-link"
-    detailViewRightArrow.classList.add('nav-arrow', 'nav-arrow-right')
 
     // add the content
     detailViewTitle.textContent = post.title
@@ -158,6 +159,7 @@ createDetailView = post => {
     detailViewParagraph.textContent = post.blurb
     detailViewLink.textContent = 'View the Data'
     detailViewLink.href = post.link
+    detailViewLink.rel = 'external'
 
     // add functionality
     detailViewLeftArrow.onclick = () => toggleContentVisibility('')
@@ -167,7 +169,6 @@ createDetailView = post => {
     fragment.appendChild(detailViewTitle)
     fragment.appendChild(detailViewImg)
     fragment.appendChild(detailViewParagraph)
-    detailViewLink.appendChild(detailViewRightArrow)
     fragment.appendChild(detailViewLink)
     detailViewContainer.appendChild(fragment)
     updatesBox.appendChild(detailViewContainer)
