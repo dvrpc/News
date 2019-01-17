@@ -67,10 +67,11 @@ body{
     right: 0;
 }
 .updates-item-title{
+    padding-top: 3px;
     display: block;
     border: none;
     background: transparent;
-    text-align: left;
+    text-align: center;
     text-decoration: underline;
     margin: 0 auto;
     font-size: 0.8rem;
@@ -130,6 +131,10 @@ body{
     height: 25px;
     width: 25px;
 }
+/* @TODO: add class to twitter and youtube to give them width: 30px */
+.thicc-bois{
+    width: 30px;
+}
 .vr{
     border: thin solid #2d799a;
     margin: 0 1% 0 1%;
@@ -145,6 +150,9 @@ body{
     .updates-item-img-container{
         width: 110px;
         height: 85px;
+    }
+    #detail-view-title{
+        padding-top: 16px;
     }
     #detail-view-img{
         /* 

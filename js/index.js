@@ -41,6 +41,34 @@ const dummyData = [
         title: 'Now hiring! Transportation Planner, Freight & Aviation Programs',
         link: 'www.catsinsinks.com',
         blurb: 'God destroys dinosaurs. God creates Man. Man destroys God. Man creates Dinosaurs.'
+    },
+    {
+        img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBdvehmlIsfvePeuVjVNk_GlFy28WM7oB8hCYwvS3gA6oy6xAI',
+        type: 'Business Opportunity',
+        title: 'An Opportunity for Business',
+        link: 'www.catsinsinks.com',
+        blurb: 'Life finds a way. Must go faster... go, go, go, go, go! Is this my espresso machine? Wh-what is-h-how did you get my espresso machine?'
+    },
+    {
+        img: 'https://d3e1o4bcbhmj8g.cloudfront.net/photos/736528/big_square/788b965e743b763d785f250c91021a0abb7167e8.jpg',
+        type: 'New Webmap',
+        title: 'Its a Map and its on the Web',
+        link: 'www.catsinsinks.com',
+        blurb: 'Do you have any idea how long it takes those cups to decompose. Hey, you know how Im, like, always trying to save the planet? Heres my chance. God creates dinosaurs.'
+    },
+    {
+        img: 'https://d3e1o4bcbhmj8g.cloudfront.net/photos/297107/big_square/1486b240629b74c53886b7210539fd3901c33167.jpg',
+        type: 'Public Meeting',
+        title: 'Its a Meeting and its Public',
+        link: 'www.catsinsinks.com',
+        blurb: 'Do you have any idea how long it takes those cups to decompose. Hey, you know how Im, like, always trying to save the planet? Heres my chance. God creates dinosaurs.'
+    },
+    {
+        img: 'https://www.asla.org/2015awards/img/96483_Lead.jpg',
+        type: 'Event',
+        title: 'This is an Event',
+        link: 'www.catsinsinks.com',
+        blurb: 'God destroys dinosaurs. God creates Man. Man destroys God. Man creates Dinosaurs.'
     }
 ]
 
@@ -110,8 +138,63 @@ createPost = post => {
     updatesBox.appendChild(updatesItem)
 }
 
-// eventually this will loop thru some kind of Fetch response
-dummyData.forEach(post => createPost(post))
+// Pagination Functions
+let currentPage = 1;
+const postsPerPage = 6
+let numberOfPages;
+let pageContents;
+
+// might as well prepare it for db response
+getPageData = async () => {
+    //const stream = await fetch('endpoint.com')
+    //const posts = await stream.json()
+    
+    const posts = dummyData
+    const length = posts.length
+
+    // calculate how many pages to create from the data set
+    numberOfPages = length % numberOfPages
+
+    // create the first page
+    makePage(posts)
+}
+
+const makePage = data => {
+    const begin = ((currentPage - 1) * postsPerPage)
+    const end = begin + postsPerPage
+    
+    // get the right data for the given page
+    pageContents = data.slice(begin, end)
+
+    // populage the page w/the right information
+    pageContents.forEach(post => createPost(post))
+}
+
+// add clicks handlers to next/previous button
+const nextPageButton = document.querySelector('#updates-box-nav-right')
+const previousPageButton = document.querySelector('#updates-box-nav-left')
+
+nextPageButton.onclick = () => changePage('next')
+previousPageButton.onclick = () => changePage('')
+
+changePage = direction => {
+    
+    // determine which arrow was clicked
+    direction === 'next' ? currentPage += 1 : currentPage -= 1
+    
+    // strip updates-box of all content EXCEPT the left/right arrows
+        // the major issue with this approach is that it strips the click handlers, so after one click it gets borked
+            // another other option is to just loop thru and remove each detail-view-container, which wouldn't be a big deal since there's at most 6
+            // another other option would be to restructure the HTML such that the nav arrows aren't children of updatesBox, and I can just do updatesBox.innerHTML = ''
+    const nextButton = nextPageButton.outerHTML.trim()
+    const previousButton = previousPageButton.outerHTML.trim()
+    updatesBox.innerHTML = previousButton + nextButton
+
+    // make the correct page (this will NOT work with async response b/c its outside the scope of the function but testing it w/dummy data for now)
+    makePage(dummyData)
+}
+
+getPageData()
 
 
 /****** Function to create detail view from post info ******/
@@ -156,6 +239,7 @@ createDetailView = post => {
     // add the content
     detailViewTitle.textContent = post.title
     detailViewImg.src = post.img
+    detailViewImg.alt = 'some kind of alt text'
     detailViewParagraph.textContent = post.blurb
     detailViewLink.textContent = 'View the Data'
     detailViewLink.href = post.link
