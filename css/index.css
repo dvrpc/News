@@ -10,7 +10,6 @@ body{
     background: #a1a1a1;
     color: #fff;
     border-radius: 50%;
-    top: 50%;
     font-size: 1.5rem;
     font-weight: 900;
     /* the unicode jawn isnt vertically centered but this kinda shims it */
@@ -24,8 +23,10 @@ body{
 /******* Main content box *******/
 #updates-box-container{
     min-height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: #fff;
-    position: relative;
     padding: 2% 5%;
 }
 #updates-box{
@@ -35,12 +36,7 @@ body{
     align-content: center;
 }
 #updates-box-nav-left{
-    position: absolute;
-    left: 3%;
-}
-#updates-box-nav-right{
-    position: absolute;
-    right: 3%;
+    display: none;
 }
 .updates-item{
     width: 25%;
@@ -121,13 +117,14 @@ body{
 #connect-with-us h2{
     color: #2d799a;
     margin-right: 2%;
+    font-size: 1.4rem;
 }
 .connect-imgs{
-    height: 25px;
-    width: 25px;
+    height: 22px;
+    width: 22px;
 }
 .thicc-bois{
-    width: 30px;
+    width: 27px;
 }
 .vr{
     border: thin solid #2d799a;
@@ -141,6 +138,12 @@ body{
 
 
 @media all and (max-width: 800px) {
+   
+    /* Updates Box */
+    .nav-arrow{
+        font-size: 1.3rem;
+        padding: 0px 10px 2px 10px;
+    }
     .updates-item{
         width: 45%;
     }
@@ -148,11 +151,26 @@ body{
         width: 110px;
         height: 85px;
     }
+
+    /* Detail View */
     #detail-view-title{
+        text-align: center;
         padding-top: 16px;
     }
     #detail-view-img{
         height: 90px;
         width: 90px;
+    }
+
+    /* Connect With Us */
+    .connect-imgs{
+        height: 20px;
+        width: 20px;
+    }
+    .thicc-bois{
+        width: 25px;
+    }
+    #connect-with-us h2{
+        font-size: 1.1rem;
     }
 }
