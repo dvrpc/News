@@ -5,47 +5,42 @@ body{
 .shadow{
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
-.nav-arrow{
-    background: transparent;
-    box-sizing: border-box;
-    margin: 0 auto;
-    height: 17px;
-    width: 15px;
-    border: solid #121212;
-    border-width: 0px 2px 2px 0px;
-    transition: border-width 150ms ease-in-out;
+.nav-arrow {
+    border: none;
+    background: #a1a1a1;
+    color: #fff;
+    border-radius: 50%;
+    top: 50%;
+    font-size: 1.5rem;
+    font-weight: 900;
+    /* the unicode jawn isnt vertically centered but this kinda shims it */
+    padding: 0px 12px 3px 12px;
+    line-height: normal;
 }
 .nav-arrow:hover{
-    border-bottom-width: 4px;
-    border-right-width: 4px;
-}
-.nav-arrow-left{
-    transform: rotate(135deg);
-}
-.nav-arrow-right{
-    transform: rotate(315deg);
+    background: #0078ae;
 }
 
 /******* Main content box *******/
-#updates-box{
+#updates-box-container{
+    min-height: 200px;
     background: #fff;
     position: relative;
+    padding: 2% 5%;
+}
+#updates-box{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
-    /* @TODO: readjust this padding after the nav arrows are added in */
-    padding: 2% 5%;
 }
 #updates-box-nav-left{
     position: absolute;
-    left: 5%;
-    top: 50%;
+    left: 3%;
 }
 #updates-box-nav-right{
     position: absolute;
-    right: 5%;
-    top: 50%;
+    right: 3%;
 }
 .updates-item{
     width: 25%;
@@ -111,7 +106,7 @@ body{
 #detail-view-left{
     position: absolute;
     top: 25px;
-    left: 2%;
+    left: 0;
 }
 
 /******* Connect with us  *******/
@@ -131,7 +126,6 @@ body{
     height: 25px;
     width: 25px;
 }
-/* @TODO: add class to twitter and youtube to give them width: 30px */
 .thicc-bois{
     width: 30px;
 }
@@ -143,6 +137,9 @@ body{
 
 
 /******* Media Queries *******/
+/* @TODO: add a breakpoint at 916px b/c the icons start to get too squished */
+
+
 @media all and (max-width: 800px) {
     .updates-item{
         width: 45%;
@@ -155,12 +152,6 @@ body{
         padding-top: 16px;
     }
     #detail-view-img{
-        /* 
-            subpage media query is overruling the margin and float properties which throws off the whole section on mobile
-            and since the subpage jawn is has margin and float w/ !important, I can't overrule it with !important so that's cool...
-        */
-        margin: -10% 0 5% 5% !important;
-        float: right !important;
         height: 90px;
         width: 90px;
     }

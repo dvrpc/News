@@ -153,10 +153,15 @@ getPageData = async () => {
     const length = posts.length
 
     // calculate how many pages to create from the data set
-    numberOfPages = length % numberOfPages
+    numberOfPages = Math.ceil(length / postsPerPage)
 
     // create the first page
     makePage(posts)
+
+    // including this to have left arrow default to display: none instead of giving it the disaply: none css by default
+        // doing this b/c going back from detail view on on pages 1+n makes it invisible
+        // ^ that's happening down in toggleVisibility so @TODO figure this out
+    toggleNavArrows()
 }
 
 const makePage = data => {
@@ -182,16 +187,18 @@ changePage = direction => {
     // determine which arrow was clicked
     direction === 'next' ? currentPage += 1 : currentPage -= 1
     
-    // strip updates-box of all content EXCEPT the left/right arrows
-        // the major issue with this approach is that it strips the click handlers, so after one click it gets borked
-            // another other option is to just loop thru and remove each detail-view-container, which wouldn't be a big deal since there's at most 6
-            // another other option would be to restructure the HTML such that the nav arrows aren't children of updatesBox, and I can just do updatesBox.innerHTML = ''
-    const nextButton = nextPageButton.outerHTML.trim()
-    const previousButton = previousPageButton.outerHTML.trim()
-    updatesBox.innerHTML = previousButton + nextButton
+    // remove old page contents
+    updatesBox.innerHTML = ''
 
     // make the correct page (this will NOT work with async response b/c its outside the scope of the function but testing it w/dummy data for now)
     makePage(dummyData)
+    toggleNavArrows()
+}
+
+// show/hide left/ride arrow depending on jawnasaurus
+toggleNavArrows = () => {
+    currentPage === numberOfPages ? nextPageButton.style.display = 'none' : nextPageButton.style.display = 'block'
+    currentPage === 1 ? previousPageButton.style.display = 'none' : previousPageButton.style.display = 'block'
 }
 
 getPageData()
@@ -231,13 +238,14 @@ createDetailView = post => {
     // add classes and ids
     detailViewContainer.id = 'detail-view-container'
     detailViewLeftArrow.id = 'detail-view-left'
-    detailViewLeftArrow.classList.add('nav-arrow', 'nav-arrow-left')
+    detailViewLeftArrow.classList.add('nav-arrow')
     detailViewTitle.id = 'detail-view-title'
     detailViewImg.id = 'detail-view-img'
     detailViewLink.id="detail-view-link"
 
     // add the content
     detailViewTitle.textContent = post.title
+    detailViewLeftArrow.textContent = '\u2039'
     detailViewImg.src = post.img
     detailViewImg.alt = 'some kind of alt text'
     detailViewParagraph.textContent = post.blurb
@@ -265,9 +273,15 @@ toggleContentVisibility = visibility => {
     // remove detail-view-container if it exists
     visibility === '' ? removeDetailBox() : null
 
+    // show/hide main nav arrows
+        // The bug where returning from detailed-view shows both arrows is happening here
+    nextPageButton.style.display = visibility
+    previousPageButton.style.display = visibility
+
     const children = updatesBox.children
     const childrenLength = children.length
 
+    // show/hide updates-box content 
     for(var i = 0; i < childrenLength; i++) children[i].style.display = visibility
 }
 
