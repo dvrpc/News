@@ -23,28 +23,29 @@ const createPost = (post, typeImages, updatesBox) => {
     const updatesItem = document.createElement('div')
     const imgContainer = document.createElement('div')
     const imgType = document.createElement('img')
-    const link = document.createElement('button')
+    const title = document.createElement('button')
 
     // add their classes
     updatesItem.classList.add('updates-item')
     imgContainer.classList.add('updates-item-img-container')
     imgType.classList.add('updates-item-img-type')
-    link.classList.add('updates-item-title')
+    title.classList.add('updates-item-title')
 
     // add content
     imgContainer.style.background = `url('${post.img}') center no-repeat`
     imgType.src = typeImages[post.type]
-    link.textContent = post.title
+    imgType.alt = `${post.type} post`
+    title.textContent = post.title
 
     // append to jawns
     imgContainer.appendChild(imgType)
     fragment.appendChild(imgContainer)
-    fragment.appendChild(link)
+    fragment.appendChild(title)
     updatesItem.appendChild(fragment)
     updatesBox.appendChild(updatesItem)
 
-    // return link to add createDetailView functionality
-    return link
+    // return updatesItem to add createDetailView functionality
+    return updatesItem
 }
 
 /****** Function to create detail view from post info ******/
@@ -64,14 +65,15 @@ OUTPUT:
         <a id="detail-view-link" href="">View the Data</a>
     </div>     
 */ 
-const createDetailView = (post, updatesBox) => {
+const createDetailView = (post, typeImages, updatesBox) => {
 
     // create the necessary elements
     const fragment = document.createDocumentFragment()
     const detailViewContainer = document.createElement('div')
     const detailViewLeftArrow = document.createElement('button')
     const detailViewTitle = document.createElement('h2')
-    const detailViewImg = document.createElement('img')
+    const imgContainer = document.createElement('div')
+    const imgType = document.createElement('img')
     const detailViewParagraph = document.createElement('p') // eventually this will call a function that loops thru the blurb field and outputs the correct # of <p> tags
     const detailViewLink = document.createElement('a')
 
@@ -80,14 +82,17 @@ const createDetailView = (post, updatesBox) => {
     detailViewLeftArrow.id = 'detail-view-left'
     detailViewLeftArrow.classList.add('nav-arrow')
     detailViewTitle.id = 'detail-view-title'
-    detailViewImg.id = 'detail-view-img'
+    imgContainer.classList.add('updates-item-img-container')
+    imgContainer.id = 'detail-view-img'
+    imgType.classList.add('updates-item-img-type')
     detailViewLink.id="detail-view-link"
 
     // add the content
     detailViewTitle.textContent = post.title
     detailViewLeftArrow.textContent = '\u2039'
-    detailViewImg.src = post.img
-    detailViewImg.alt = 'some kind of alt text'
+    imgContainer.style.background = `url('${post.img}') center no-repeat`
+    imgType.src = typeImages[post.type]
+    imgType.alt = `${post.type} post`
     detailViewParagraph.textContent = post.blurb
     detailViewLink.textContent = 'View the Data'
     detailViewLink.href = post.link
@@ -95,7 +100,8 @@ const createDetailView = (post, updatesBox) => {
 
     // append children
     fragment.appendChild(detailViewLeftArrow)
-    fragment.appendChild(detailViewImg)
+    imgContainer.appendChild(imgType)
+    fragment.appendChild(imgContainer)    
     fragment.appendChild(detailViewTitle)
     fragment.appendChild(detailViewParagraph)
     fragment.appendChild(detailViewLink)

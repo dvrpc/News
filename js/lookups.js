@@ -16,23 +16,23 @@ const dummyData = [
     {
         img: 'https://i.pinimg.com/236x/73/fe/29/73fe29529249bd1b3b6d6fcc638fb342--landscape-architects-tropical-paradise.jpg',
         type: 'Event',
-        title: 'Share-A-Ride Ridematch Service Makes Commuting Easier in Southeastern PA',
+        title: 'Share-A-Ride Ridematch Service',
         link: 'http://www.catsinsinks.com',
-        blurb: 'Just my luck, no ice. Eventually, you do plan to have dinosaurs on your dinosaur tour, right? Is this my espresso machine?'
+        blurb: 'Just my luck, no ice. Eventually, you do plan to have dinosaurs on your dinosaur tour, right? Is this my espresso machine? You really think you can fly that thing? Jaguar shark! Did he just throw my cat out of the window?'
     },
     {
         img: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/2011-05-2711:13/road-trip-1446065101.jpg?resize=768:*',
         type: 'Press Release',
         title: 'Making Trails Happen',
         link: 'http://www.catsinsinks.com',
-        blurb: 'Life finds a way. Must go faster... go, go, go, go, go! Is this my espresso machine? Wh-what is-h-how did you get my espresso machine?'
+        blurb: 'Life finds a way. Must go faster... go, go, go, go, go! Is this my espresso machine? Wh-what is-h-how did you get my espresso machine? Hey, you know how Im, like, always trying to save the planet? Heres my chance. '
     },
     {
         img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBdvehmlIsfvePeuVjVNk_GlFy28WM7oB8hCYwvS3gA6oy6xAI',
         type: 'New Report',
         title: 'Future of Moving People and Goods',
         link: 'http://www.catsinsinks.com',
-        blurb: 'Life finds a way. You know what? It is beets. Eventually, you do plan to have dinosaurs on your dinosaur tour, right?'
+        blurb: 'Life finds a way. You know what? It is beets. Eventually, you do plan to have dinosaurs on your dinosaur tour, right? Youre a very talented young man, with your own clever thoughts and ideas. Do you need a manager? Yeah, but John, if The Pirates of the Caribbean breaks down, the pirates dont eat the tourists.'
     },
     {
         img: 'https://www.asla.org/2015awards/img/96483_Lead.jpg',
@@ -51,7 +51,7 @@ const dummyData = [
     {
         img: 'https://d3e1o4bcbhmj8g.cloudfront.net/photos/297107/big_square/1486b240629b74c53886b7210539fd3901c33167.jpg',
         type: 'Funding Available',
-        title: 'Now hiring! Transportation Planner, Freight & Aviation Programs',
+        title: 'Now hiring! Planner',
         link: 'http://www.catsinsinks.com',
         blurb: 'God destroys dinosaurs. God creates Man. Man destroys God. Man creates Dinosaurs.'
     },
@@ -100,7 +100,7 @@ const dummyData = [
     {
         img: 'https://d3e1o4bcbhmj8g.cloudfront.net/photos/297107/big_square/1486b240629b74c53886b7210539fd3901c33167.jpg',
         type: 'Funding Available',
-        title: 'Now hiring! Transportation Planner, Freight & Aviation Programs',
+        title: 'Now hiring! Planner',
         link: 'http://www.catsinsinks.com',
         blurb: 'God destroys dinosaurs. God creates Man. Man destroys God. Man creates Dinosaurs.'
     },

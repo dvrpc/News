@@ -18,4 +18,4 @@ const removeDetailBox = () => {
     detailViewContainer.parentNode.removeChild(detailViewContainer)
 }
 
-export { toggleContentVisibility, removeDetailBox }
+export { toggleContentVisibility }

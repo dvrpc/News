@@ -24,11 +24,11 @@ const createNewPage = posts => {
     // create the page & add detail view functionality
     pageContents.forEach(post => {
 
-        // create the post and return the link so that functionality can be added
-        const link = createPost(post, typeImages, updatesBox)
+        // create the post and return the updatesItem so that functionality can be added
+        const updatesItem = createPost(post, typeImages, updatesBox)
         
-        // add detailView functionality to the created links
-        link.onclick = () => {
+        // add detailView functionality to the created updatesItems
+        updatesItem.onclick = () => {
             
             // hide the post previews
             toggleContentVisibility('none', updatesBox)
@@ -38,7 +38,7 @@ const createNewPage = posts => {
             previousPageButton.style.display = 'none'
             
             // create the detail view + add functionality to the return arrow
-            const detailViewLeftArrow = createDetailView(post, updatesBox)
+            const detailViewLeftArrow = createDetailView(post, typeImages, updatesBox)
 
             detailViewLeftArrow.onclick = () => {
                 toggleContentVisibility('', updatesBox)
