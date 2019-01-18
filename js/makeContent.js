@@ -1,6 +1,3 @@
-const updatesBox = document.querySelector('#updates-box')
-
-
 /****** Function to Create Updates Items ******/
 /*
 INPUT:
@@ -19,7 +16,7 @@ OUTPUT:
         <button class="updates-item-title">Title</button>
     </div>       
 */
-const createPost = (post, typeImages, createDetailView) => {
+const createPost = (post, typeImages, updatesBox) => {
 
     // create the necessary elements
     const fragment = document.createDocumentFragment()
@@ -38,9 +35,6 @@ const createPost = (post, typeImages, createDetailView) => {
     imgContainer.style.background = `url('${post.img}') center no-repeat`
     imgType.src = typeImages[post.type]
     link.textContent = post.title
-    
-    // add functionality
-    link.onclick = () => createDetailView(post)
 
     // append to jawns
     imgContainer.appendChild(imgType)
@@ -48,6 +42,9 @@ const createPost = (post, typeImages, createDetailView) => {
     fragment.appendChild(link)
     updatesItem.appendChild(fragment)
     updatesBox.appendChild(updatesItem)
+
+    // return link to add createDetailView functionality
+    return link
 }
 
 /****** Function to create detail view from post info ******/
@@ -67,12 +64,7 @@ OUTPUT:
         <a id="detail-view-link" href="">View the Data</a>
     </div>     
 */ 
-const createDetailView = (post, toggleContentVisibility) => {
-
-    // first hide all the contents of updates-box + the nav arrows
-    toggleContentVisibility('none')
-    nextPageButton.style.display = 'none'
-    previousPageButton.style.display = 'none'
+const createDetailView = (post, updatesBox) => {
 
     // create the necessary elements
     const fragment = document.createDocumentFragment()
@@ -101,9 +93,6 @@ const createDetailView = (post, toggleContentVisibility) => {
     detailViewLink.href = post.link
     detailViewLink.rel = 'external'
 
-    // add functionality
-    detailViewLeftArrow.onclick = () => toggleContentVisibility('')
-
     // append children
     fragment.appendChild(detailViewLeftArrow)
     fragment.appendChild(detailViewImg)
@@ -112,6 +101,8 @@ const createDetailView = (post, toggleContentVisibility) => {
     fragment.appendChild(detailViewLink)
     detailViewContainer.appendChild(fragment)
     updatesBox.appendChild(detailViewContainer)
+
+    return detailViewLeftArrow
 }
 
 export { createPost, createDetailView }

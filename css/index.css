@@ -81,8 +81,8 @@ body{
 #detail-view-img{
     margin: 0 0 3% 3%;
     border-radius: 10px;
-    height: 120px;
-    width: 130px;
+    width: 125px;
+    height: 100px;
     float: right;
 }
 #detail-view-link{

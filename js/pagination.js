@@ -7,8 +7,6 @@ const makePage = (data, currentPage, postsPerPage) => {
     const contents = data.slice(begin, end)
 
     return contents
-    // populage the page w/the right information
-    //pageContents.forEach(post => createPost(post))
 }
 
 // update page tracking variable & remove old page contents

@@ -1,11 +1,8 @@
 /****** Function to toggle updates-box main content visibility ******/
-const toggleContentVisibility = visibility => {
+const toggleContentVisibility = (visibility, updatesBox) => {
     
     // remove detail-view-container if it exists
     visibility === '' ? removeDetailBox() : null
-
-    // show/hide main nav arrows
-    toggleNavArrows()
 
     const children = updatesBox.children
     const childrenLength = children.length
@@ -15,7 +12,7 @@ const toggleContentVisibility = visibility => {
 }
 
 
-/****** Function to remove the detail jawn ******/
+/****** Helper Function to remove the detail page ******/
 const removeDetailBox = () => {
     const detailViewContainer = document.querySelector('#detail-view-container')
     detailViewContainer.parentNode.removeChild(detailViewContainer)
