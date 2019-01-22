@@ -1,0 +1,34 @@
+/* Instructions */
+ul{
+    list-style-type: none;
+    display: block;
+}
+
+hr{
+    margin: 3%;
+}
+
+/* The form itself */
+form{
+    width: 60%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+fieldset{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border: none;
+}
+label{
+    font-weight: 800;
+    width: 10%;
+}
+input{
+    width: 60%;
+}
+input[type="textarea"]{
+    height: 250px;
+}
