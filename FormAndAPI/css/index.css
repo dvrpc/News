@@ -1,18 +1,105 @@
+/* General */
+body{
+    background: #f7f7f7;
+    font-size: 16px;
+    margin: 0;
+    font-family: 'IBM Plex Sans', sans-serif;;
+}
+
+
+/* Nav */
+nav{
+    background: #fff;
+    width: 100%;
+    height: 6vh;
+    text-align: center;
+    box-shadow: 0 0 5px 1px rgba(0,0,0,0.5);
+}
+#nav-content-wrapper{
+    height: 100%;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 /* Instructions */
+h1{
+    font-size: 2rem;
+    text-align: center;
+}
+#instructions{
+    padding-left: 5%;
+}
 ul{
     list-style-type: none;
-    display: block;
+    padding-left: 15%;
+}
+li{
+    margin: 3px 0;
+}
+#sublist{
+    padding-left: 5%;
+    margin: 3px 0;
 }
 
 hr{
     margin: 3%;
+    color: #424c55;
 }
 
-/* The form itself */
-form{
-    width: 60%;
-    margin: 0 auto;
+
+/* Toggles */
+#toggle-buttons-wrapper{
+    width: 90%;
     display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    margin: 0 auto;
+}
+#reset-form-view-button{
+    display: none;
+    border: none;
+    background: #a1a1a1;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: 900;
+    padding: 0px 12px 4px 12px;
+    line-height: normal;
+}
+#reset-form-view-button:hover{
+    cursor: pointer;
+    background: #323232;
+}
+.toggle-button{
+    font-size: 1rem;
+    background: transparent;
+    padding: 1% 2%;
+    border-radius: 5px;
+}
+.toggle-button:hover{
+    color: #fbfbff;
+    cursor: pointer;
+}
+.new-post-button{
+    border: 2px solid #3626a7;
+}
+.new-post-button:hover{
+    background: #3626a7;
+}
+.edit-post-button{
+    border: 2px solid #ff331f;
+}
+.edit-post-button:hover{
+    background: #ff331f;
+}
+
+/* Submit New Post Form */
+form{
+    width: 80%;
+    display: none;
     flex-direction: column;
     align-items: center;
 }
@@ -26,8 +113,11 @@ label{
     font-weight: 800;
     width: 10%;
 }
-input{
+input, select{
     width: 60%;
+}
+select{
+    text-align: center;
 }
 input[type="textarea"]{
     height: 250px;
