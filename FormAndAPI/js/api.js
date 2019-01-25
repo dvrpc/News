@@ -6,9 +6,6 @@ const BlogPost = models.BlogPost
 
 /****** Add new Posts to the DB ******/
 api.post('/addPost', (req, res, next) => {
-    console.log('req body ', req.body)
-
-    // probably want to add an ID field here. Or just use the title as pseudo-ID's cause that'll be easier for OCE to lookup
     BlogPost.create(req.body).then(post => {
         res.json({
             title: post.title,
@@ -20,12 +17,18 @@ api.post('/addPost', (req, res, next) => {
     }).catch(next)
 })
 
-/****** Test route ******/
-api.get('/test', (req, res, next) => {
-    console.log('ffs')
-})
 
 /****** Let users retrieve and edit posts ******/
+api.get('/getTop16', (req, res, next) => {
+    // get the 16 most recent posts from the db
+    BlogPost.findAll({
+        limit: 16,
+        order: [['updatedAt', 'DESC']]
+    })
+    .then(posts => res.send(posts))
+    .catch(next)
+})
+
 api.get('/getPost/:id', (req, res, next) => {
     BlogPost.findById(req.params.id)
     .then(post => res.send(post))

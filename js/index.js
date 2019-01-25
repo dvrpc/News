@@ -14,6 +14,15 @@ const postsPerPage = 6
 let numberOfPages;
 let pageContents;
 
+// test to get the jawns (it works. neat-o)
+const jawn = async () => {
+    const stream = await fetch('http://10.1.1.194:3001/api/getTop16')
+    const data = await stream.json()
+    console.log('data from the db ', data)
+}
+
+jawn()
+
 
 /****** New Page + Data Functions ******/
 // general function to create new page (@TODO: once db response is set up, just add posts.then(posts => {}) to make it work)

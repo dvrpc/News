@@ -70,13 +70,13 @@ const options = data => {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Access-Control-Allow-Origin': 'http://localhost'
+            'Access-Control-Allow-Origin': 'http://intranet.dvrpc.org/'
         },
         body: JSON.stringify(data)
     }
 }
-//http://intranet.dvrpc.org/News/api/addPost
-postData = data => fetch('http://localhost:3001/api/addPost', options(data)).then(res => console.log(res))
+
+postData = data => fetch('http://10.1.1.194:3001/api/addPost', options(data)).then(res => console.log(res))
 
 
 /****** Do the things on submit ******/

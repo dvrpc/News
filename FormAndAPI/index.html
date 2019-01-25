@@ -82,8 +82,10 @@
     
         <button class="toggle-button edit-post-button">Edit Post</button>
         <form id="edit-form">
-            <label for="search-entries">Search Posts: </label>
-            <input type="search" name="search-entires" id="search-entries" />
+            <fieldset name="search" form="edit-form">
+                <label for="search-entries">Search Posts: </label>
+                <input type="search" name="search-entires" id="search-entries" />
+            </fieldset>
             <!-- after search gets a response, create a pre-populated 'new-form' w/ the db info. And of course make it editable -->
         </form>
     </div>

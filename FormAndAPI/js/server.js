@@ -17,5 +17,3 @@ app.use('/api', require('./api.js'))
 app.listen(port, '0.0.0.0', () => console.log('listening on the port ', port))
 
 module.exports = app
-
-// Intranet IP: '10.1.1.144'
