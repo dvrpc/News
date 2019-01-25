@@ -5,6 +5,7 @@ const BlogPost = models.BlogPost
 
 
 /****** Add new Posts to the DB ******/
+// create a new post
 api.post('/addPost', (req, res, next) => {
     BlogPost.create(req.body).then(post => {
         res.json({
@@ -19,8 +20,8 @@ api.post('/addPost', (req, res, next) => {
 
 
 /****** Let users retrieve and edit posts ******/
+// get (up to) the 16 most recent posts from the db
 api.get('/getTop16', (req, res, next) => {
-    // get the 16 most recent posts from the db
     BlogPost.findAll({
         limit: 16,
         order: [['updatedAt', 'DESC']]
@@ -29,16 +30,23 @@ api.get('/getTop16', (req, res, next) => {
     .catch(next)
 })
 
-api.get('/getPost/:id', (req, res, next) => {
-    BlogPost.findById(req.params.id)
+// find the post to edit
+api.get('/getPost/:title', (req, res, next) => {
+    BlogPost.findOne({
+        where: {
+            title: req.params.title
+        } 
+    })
     .then(post => res.send(post))
     .catch(next)
 })
 
-api.put('/updatePost/:id', (req, res, next) => {
+// update the edited post
+api.put('/updatePost/:title', (req, res, next) => {
     return BlogPost.update(req.body, {
-        where: {id: req.params.id},
-        // @TODO: look into if this should be returning true/false
+        where: {
+            title: req.params.title
+        },
         returning: false
     })
     .then(updatedPost => res.status(201).json(updatedPost))
