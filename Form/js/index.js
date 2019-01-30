@@ -1,13 +1,10 @@
-/****** Buttons to toggle form visibility ******/
+/****** Basic Page Functionality ******/
+// Get a handle on the necessary elements
 const newPostToggle = document.querySelector('.new-post-button')
 const editPostToggle = document.querySelector('.edit-post-button')
 const newPostForm = document.querySelector('#new-form')
 const editPostForm = document.querySelector('#edit-form-search')
 const backButton = document.querySelector('#reset-form-view-button')
-
-newPostToggle.onclick = () => showForm([newPostToggle, editPostToggle], newPostForm)
-editPostToggle.onclick = () => showForm([newPostToggle, editPostToggle], editPostForm)
-backButton.onclick = () => resetForms()
 
 // reveal the forms on back button click
 showForm = (buttons, form) => {
@@ -36,8 +33,70 @@ resetForms = () => {
     editPostToggle.style.display = ''
 }
 
+// apply click handlers
+newPostToggle.onclick = () => showForm([newPostToggle, editPostToggle], newPostForm)
+editPostToggle.onclick = () => showForm([newPostToggle, editPostToggle], editPostForm)
+backButton.onclick = () => resetForms()
 
-/****** Format the Inputs ******/
+
+/****** API Calls ******/
+// POST or PUT data and give user feedback
+postData = async (data, endpoint, method) => {
+    const options = data => {
+        return {
+            method,
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin': 'http://intranet.dvrpc.org/'
+            },
+            body: JSON.stringify(data)
+        }
+    }
+
+    const stream = await fetch(`http://10.1.1.194:3001/api/${endpoint}`, options(data))
+
+    if(stream.ok){
+        let customSuccess;
+
+        method === 'POST' ? customSuccess = 'Post added to database,' : customSuccess = 'Post updated,'
+        const success = `Success! ${customSuccess} please navigate to staging.dvrpc.org/newsroom/news to see the updated page.`
+
+        alert(success)
+        window.location.reload(true)
+    }else{
+        let customFail;
+
+        method === 'POST' ? customFail = 'added.' : customFail = 'updated.'
+        const fail = `Something went wrong and the post wasn't ${customFail} Please try again.`
+
+        alert(fail)
+    }
+}
+
+// GET existing posts to edit
+findEntry = async title => {
+    const options = {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+        }
+    }
+    
+    const stream = await fetch(`http://10.1.1.194:3001/api/getPost/${title}`, options)
+    let response;
+
+    // return data or a useful error message
+    stream.ok === true ? response = await stream.json() : response = stream.statusText
+
+    return response
+}
+
+
+/****** Form Submission (GET, POST and PUT) ******/
+// Format the Inputs
 formatInputs = e => {
     e.preventDefault()
     let postData = {}
@@ -68,59 +127,13 @@ formatInputs = e => {
     return postData
 }
 
-
-/****** Post to the DB ******/
-
-// POST or PUT data and give user feedback
-postData = (data, endpoint, method) => {
-    const options = data => {
-        return {
-            method,
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Access-Control-Allow-Origin': 'http://intranet.dvrpc.org/'
-            },
-            body: JSON.stringify(data)
-        }
-    }
-
-    fetch(`http://10.1.1.194:3001/api/${endpoint}`, options(data)).then(res => {
-        let customSuccess;
-        let customFail;
-        
-        // success/fail messages change depending on POST or PUT
-        if(endpoint === 'addPost'){
-            customSuccess = 'Post added to database,'
-            customFail = 'added.'
-        }else{
-            customSuccess = 'Post updated,'
-            customFail = 'updated.'
-        }
-
-        let success = `Success! ${customSuccess} please navigate to staging.dvrpc.org/newsroom/news to see the updated page.`
-        let fail = `Something went wrong and the post wasn't ${customFail} Please try again`
-        
-        // give user feedback and update view if necessary
-        if(res.ok){
-            alert(success)
-            window.location.reload(true)
-        }else{
-            alert(fail)
-        }
-    })
-}
-
-
-/****** Do the things on submit ******/
+// Create a new Post
 newPostForm.onsubmit = e => {
     const data = formatInputs(e)
     postData(data, 'addPost', 'POST')
 }
 
-
-/****** Edit a Post - Search and update ******/
+// Edit a Post - earch and update
 editPostForm.onsubmit = e => {
     e.preventDefault()
 
@@ -192,24 +205,4 @@ editPostForm.onsubmit = e => {
             }
         }
     })
-}
-
-findEntry = async title => {
-    const options = {
-        method: 'GET',
-        mode: 'cors',
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8'
-        }
-    }
-    
-    const stream = await fetch(`http://10.1.1.194:3001/api/getPost/${title}`, options)
-    let response;
-
-    console.log('stream ', stream)
-
-    // return data or a useful error message
-    stream.ok === true ? response = await stream.json() : response = stream.statusText
-
-    return response
 }
