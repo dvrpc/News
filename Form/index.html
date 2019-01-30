@@ -74,19 +74,20 @@
     
             <fieldset name="blurb" form="news-form">
                 <label for="blurb">Blurb: </label>
-                <input required type="textarea" name="blurb" id="blurb">
+                <input required type="text" name="blurb" id="blurb">
             </fieldset>
     
-            <button class="toggle-button new-post-button" id="submit-new-post">Submit</button>
+            <button class="toggle-button new-post-button post-button" id="submit-new-post">Submit</button>
         </form>
     
         <button class="toggle-button edit-post-button">Edit Post</button>
-        <form id="edit-form">
-            <fieldset name="search" form="edit-form">
+        
+        <form id="edit-form-search">
+            <fieldset name="search" form="edit-form-search">
                 <label for="search-entries">Search Posts: </label>
                 <input type="search" name="search-entires" id="search-entries" />
+                <button class="toggle-button edit-post-button post-button">Search</button>
             </fieldset>
-            <!-- after search gets a response, create a pre-populated 'new-form' w/ the db info. And of course make it editable -->
         </form>
     </div>
 </body>

@@ -73,15 +73,20 @@ hr{
     cursor: pointer;
     background: #323232;
 }
+/* @TODO: the 'submit' buttons shouldn't have the margin-top. */
 .toggle-button{
+    margin-top: 13%;
     font-size: 1rem;
     background: transparent;
-    padding: 1% 2%;
+    padding: 8px 18px;
     border-radius: 5px;
 }
 .toggle-button:hover{
     color: #fbfbff;
     cursor: pointer;
+}
+.post-button{
+    margin-top: 1%;
 }
 .new-post-button{
     border: 2px solid #3626a7;
@@ -119,6 +124,9 @@ input, select{
 select{
     text-align: center;
 }
-input[type="textarea"]{
+#blurb{
     height: 250px;
+}
+#edit-title{
+    margin-top: 0;
 }

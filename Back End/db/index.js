@@ -1,7 +1,7 @@
 // DB Index
 const sequelize = require('sequelize')
 const debug = require('debug')('sql')
-const pkg = require('../../package.json')
+const pkg = require('../package.json')
 require('dotenv').load()
 
 const name = pkg.name

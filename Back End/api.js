@@ -37,12 +37,12 @@ api.get('/getPost/:title', (req, res, next) => {
             title: req.params.title
         } 
     })
-    .then(post => res.send(post))
+    .then(post => post ? res.send(post) : res.status(404).send('Post not found'))
     .catch(next)
 })
 
 // update the edited post
-api.put('/updatePost/:title', (req, res, next) => {
+api.put('/updatePost/:title', (req, res, next) => {    
     return BlogPost.update(req.body, {
         where: {
             title: req.params.title
