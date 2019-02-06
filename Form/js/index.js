@@ -94,8 +94,28 @@ findEntry = async title => {
     return response
 }
 
+// DELETE existing posts
+deleteEntry = async title => {
+    const options = {
+        method: 'DELETE',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json, charset=utf-8'
+        }
+    }
 
-/****** Form Submission (GET, POST and PUT) ******/
+    const stream = await fetch(`http://10.1.1.194:3001/api/deletePost/${title}`, options)
+
+    if(stream.status === 204){
+        alert('Succesfully deleted the post')
+        window.location.reload(true)
+    }else{
+        alert('Failed to delete')
+    }
+}
+
+
+/****** Form Submission (CRUD) ******/
 // Format the Inputs
 formatInputs = e => {
     e.preventDefault()
@@ -133,7 +153,20 @@ newPostForm.onsubmit = e => {
     postData(data, 'addPost', 'POST')
 }
 
-// Edit a Post - earch and update
+// Edit or delete an existing Post
+submitEditOrDelete = (e, deletePost, title) => {
+    e.preventDefault()
+
+    // depending on user input, either update or destroy the post
+    if(!deletePost){
+        const data = formatInputs(e)
+        postData(data, `updatePost/${title}`, 'PUT')
+    }else{
+        deleteEntry(title)
+    }
+}
+
+// capture user input for editing or deleting an existing Post
 editPostForm.onsubmit = e => {
     e.preventDefault()
 
@@ -153,7 +186,7 @@ editPostForm.onsubmit = e => {
             // change the form status from 'edit-search' to 'edit'
             editPostForm.id = 'edit-form'
             editPostForm.innerHTML = `
-                <fieldset name="title" form="edit-form">
+                <fieldset name="title" form="edit-form" method="post">
                     <label for="title">Title: </label>
                     <input required type="text" name="title" id="title" value=${response.title}>
                 </fieldset>
@@ -188,21 +221,26 @@ editPostForm.onsubmit = e => {
                     <input required type="text" name="blurb" id="blurb" value="${response.blurb}">
                 </fieldset>
 
-                <button class="toggle-button new-post-button post-button" id="submit-edited-post">Submit</button>
+                <div id="edit-form-buttons">
+                    <button name="edit" class="toggle-button edit-post-button post-button" id="submit-edited-post">Submit Edit</button>
+                    <button type="submit" name="delete" class="toggle-button delete-post-button" id="delete-post">Delete Post</button>
+                </div>
             `
 
             editPostForm.insertAdjacentHTML('afterbegin', `<h2 id="edit-title">Edit Post "${response.title}":</h2>`)
 
             const updatePostForm = document.querySelector('#edit-form')
+            const deleteButton = document.querySelector('#delete-post')
+           
+            let deletePost = false
 
-            updatePostForm.onsubmit = e => {
-                const data = formatInputs(e)
+            // flip deletePost bool if the delete button is selected
+            deleteButton.onfocus = e => deletePost = true
 
-                // update using the OLD title because we want to find that entry and replace its contents
-                const formattedTitle = encodeURI(response.title)
-
-                postData(data, `updatePost/${formattedTitle}`, 'PUT')
-            }
+            const formattedTitle = encodeURI(response.title)
+            
+            // edit or delete the post, depending on which button was used to submit
+            updatePostForm.onsubmit = e => submitEditOrDelete(e, deletePost, formattedTitle)
         }
     })
 }

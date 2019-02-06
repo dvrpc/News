@@ -29,11 +29,8 @@
         <li><strong>Title: </strong> The name of the blog post i.e. "Making Trails Happen"</li>
         <li><strong>Type: </strong> The type of post i.e. "Press Release"</li>
         <li><strong>Link: </strong> The URL for the post content i.e. "https://www.dvrpc.org/trails/regionaltrailsprogram/"</li>
-        <li>
-            <strong>Image: </strong> The name of the background image for the post i.e. "sampleImage2.png"
-            <p id="sublist"><strong>Note: </strong>TBD on where you should put the images b/c I'm not sure what files/directories you all do or don't have access to.</p>
-        </li>
-        <li><strong>Blurb: </strong> The text description for the post. No real limit on length but should be at least XXXXXXX words long.</li>
+        <li><strong>Image: </strong>Select an image to use as a background. Please limit image size to <strong>200x200</strong></li>
+        <li><strong>Blurb: </strong> The text description for the post. No real limit on length but should be at least TBD words long.</li>
     </ul>
 
     <hr />
@@ -41,7 +38,7 @@
     <div id="toggle-buttons-wrapper">
         <button id="reset-form-view-button">&#8249;</button>
         <button class="toggle-button new-post-button">New Post</button>
-        <form id="new-form">
+        <form id="new-form" method="post">
             <fieldset name="title" form="news-form">
                 <label for="title">Title: </label>
                 <input required type="text" name="title" id="title">
@@ -70,6 +67,7 @@
             <fieldset name="img" form="news-form">
                 <label for="img">Image: </label>
                 <input required type="text" name="img" id="img">
+                <!-- <input required type="file" name="img" id="img" accept="image/png, image/jpeg"> -->
             </fieldset>
     
             <fieldset name="blurb" form="news-form">

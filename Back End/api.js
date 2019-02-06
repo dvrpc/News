@@ -53,4 +53,22 @@ api.put('/updatePost/:title', (req, res, next) => {
     .catch(next)
 })
 
+// delete a selected post
+api.delete('/deletePost/:title', (req, res, next) => {
+    // destroy() needs id, so use title to pull the entry from the db and then use its id to call destroy()
+    BlogPost.findOne({
+        where: {
+            title: req.params.title
+        }
+    })
+    .then(post => {
+        BlogPost.destroy({
+            where: {id: post.id}
+        })
+        .then(destroyed => destroyed ? res.status(204).send() : res.status(404).send())
+        .catch(next)
+    })
+    .catch(next)
+})
+
 module.exports = api
