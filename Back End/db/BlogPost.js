@@ -1,5 +1,5 @@
 'use strict'
-const { STRING } = require('sequelize')
+const { STRING, TEXT } = require('sequelize')
 const db = require('./index.js')
 
 // Model for BlogPosts
@@ -17,7 +17,7 @@ module.exports = db.define('BlogPost', {
         allowNull: false
     },
     blurb: {
-        type: STRING,
+        type: TEXT,
         allowNull: false
     },
     type: {

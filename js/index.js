@@ -1,4 +1,4 @@
-import { typeImages, dummyData } from './lookups.js'
+import { typeImages } from './lookups.js'
 import { makePage, changePage, toggleNavArrows } from './pagination.js'
 import { createPost, createDetailView } from './makeContent.js'
 import { toggleContentVisibility } from './toggleVisibility.js'
@@ -15,18 +15,17 @@ let numberOfPages;
 let pageContents;
 
 // test to get the jawns (it works. neat-o)
-const jawn = async () => {
+const getPosts = async () => {
     const stream = await fetch('http://10.1.1.194:3001/api/getTop16')
     const data = await stream.json()
-    console.log('data from the db ', data)
+    return data
 }
-
-jawn()
 
 
 /****** New Page + Data Functions ******/
-// general function to create new page (@TODO: once db response is set up, just add posts.then(posts => {}) to make it work)
+// general function to create new page
 const createNewPage = posts => {
+
     // get the data for the page
     pageContents = makePage(posts, currentPage, postsPerPage)
 
@@ -58,18 +57,18 @@ const createNewPage = posts => {
 }
 
 // might as well prepare it for db response
-const getPageData = async () => {
-    //const stream = await fetch('endpoint.com')
-    // for the real thing - posts can be exported as a promise and then functions that use it will jsut need to .then() off it.
-    //const posts = await stream.json()
-    
-    const posts = dummyData
-    const length = posts.length
+const getPageData = async (initial) => {
+    const data = getPosts()
 
-    // calculate how many pages to create from the data set
-    numberOfPages = Math.ceil(length / postsPerPage)
+    data.then(posts => {
+        if(initial){
+            // calculate how many pages to create from the data set
+            const length = posts.length
+            numberOfPages = Math.ceil(length / postsPerPage)
+        }
 
-    createNewPage(posts)
+        createNewPage(posts)
+    })
 }
 
 
@@ -80,8 +79,7 @@ const navButtonClick = direction => {
     // update currentPage and clear updatesBox of old content
     currentPage = changePage(direction, currentPage, updatesBox)
     
-    // @TODO: replace dummyData w/ promise exported by getPageData
-    createNewPage(dummyData)
+    getPageData(false)
 
     toggleNavArrows(currentPage, numberOfPages, nextPageButton, previousPageButton)
 }
@@ -90,4 +88,4 @@ nextPageButton.onclick = () => navButtonClick('next')
 previousPageButton.onclick = () => navButtonClick('')
 
 // on load, create the first page (with db, getPageData will be refactored to return a data PROMISE, which will replace all instances of dummyData etc., and then createNewPage() will be called here w/that object instead)
-getPageData()
+getPageData(true)
