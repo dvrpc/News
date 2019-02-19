@@ -21,6 +21,13 @@ body{
 }
 
 /******* Main content box *******/
+#filter-wrapper{
+    margin-bottom: 3%;
+    text-align: center;
+}
+#cat-filter-label{
+    padding-right: 1%;
+}
 #updates-box-container{
     min-height: 200px;
     display: flex;
