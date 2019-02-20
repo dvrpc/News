@@ -20,10 +20,10 @@ api.post('/addPost', (req, res, next) => {
 
 
 /****** Let users retrieve and edit posts ******/
-// get (up to) the 16 most recent posts from the db
-api.get('/getTop16', (req, res, next) => {
+// get (up to) the 18 most recent posts from the db
+api.get('/getTop18', (req, res, next) => {
     BlogPost.findAll({
-        limit: 16,
+        limit: 18,
         order: [['updatedAt', 'DESC']]
     })
     .then(posts => res.send(posts))

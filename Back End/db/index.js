@@ -18,7 +18,7 @@ require('./models.js')
 
 // sync the db. force true for now to create/recreate w/dummy data 
     //@TODO: remember to change to force=FALSE once this is up and running
-function sync(force=true) {
+function sync(force=false) {
     return db.sync({force})
     .then(ok => console.log('synced models to db ', connectionString))
     .catch(fail => {
