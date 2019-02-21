@@ -16,15 +16,15 @@ const changePage = (direction, currentPage, updatesBox) => {
     direction === 'next' ? currentPage += 1 : currentPage -= 1
     
     // remove old page contents
-    updatesBox.innerHTML = ''
+    while(updatesBox.firstChild){
+        updatesBox.removeChild(updatesBox.firstChild)
+    }
 
     return currentPage
 }
 
 // show/hide left/ride arrow depending on jawnasaurus
 const toggleNavArrows = (currentPage, numberOfPages, nextPageButton, previousPageButton) => {
-    console.log('current page at toggleNav arrows ', currentPage)
-    console.log('number of pages at togglenavarrows ', numberOfPages)
     currentPage === numberOfPages ? nextPageButton.style.display = 'none' : nextPageButton.style.display = 'block'
     currentPage === 1 ? previousPageButton.style.display = 'none' : previousPageButton.style.display = 'block'
 }

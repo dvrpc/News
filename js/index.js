@@ -70,17 +70,19 @@ const getPageData = async filter => {
     data.then(posts => {
         if(filter){
             posts = posts.filter(post => post.type === filter)
+
+            // handle 'no results' case
+            if(!posts.length){
+                noPosts()
+                return
+            }
+            
+            // force currentPage to 1 to reset the pagination jawn
+            currentPage = 1
         }
 
         // calculate length to determine how many pages to create from the data set or show noPosts message
         length = posts.length
-
-        // handle 'no results' case
-        if(!length){
-            noPosts()
-            return
-        }
-
         numberOfPages = Math.ceil(length / postsPerPage)
         
         // update the navigation arrows based on the results of the filter
