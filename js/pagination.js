@@ -23,6 +23,8 @@ const changePage = (direction, currentPage, updatesBox) => {
 
 // show/hide left/ride arrow depending on jawnasaurus
 const toggleNavArrows = (currentPage, numberOfPages, nextPageButton, previousPageButton) => {
+    console.log('current page at toggleNav arrows ', currentPage)
+    console.log('number of pages at togglenavarrows ', numberOfPages)
     currentPage === numberOfPages ? nextPageButton.style.display = 'none' : nextPageButton.style.display = 'block'
     currentPage === 1 ? previousPageButton.style.display = 'none' : previousPageButton.style.display = 'block'
 }

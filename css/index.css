@@ -25,6 +25,9 @@ body{
     margin-bottom: 3%;
     text-align: center;
 }
+#no-results-post-filter{
+    text-align: center;
+}
 #cat-filter-label{
     padding-right: 1%;
 }

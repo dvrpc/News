@@ -10,7 +10,7 @@ const previousPageButton = document.querySelector('#updates-box-nav-left')
 const filter = document.querySelector('#cat-filter')
 
 // Variables for Pagination Functions
-let currentPage = 1;
+let currentPage = 1
 const postsPerPage = 6
 let numberOfPages;
 let pageContents;
@@ -20,9 +20,9 @@ let length;
 // test to get the jawns (it works. neat-o)
 const getPosts = async () => {
     try{
-        const stream = await fetch('http://10.1.1.194:3001/api/getTop16')
+        const stream = await fetch('http://10.1.1.194:3001/api/getTop18')
         const data = await stream.json()
-        return data
+        return data        
     }
     catch(error) {
         console.error(error)
@@ -68,20 +68,24 @@ const getPageData = async filter => {
     const data = getPosts()
 
     data.then(posts => {
-        if(filter && filter != 'None'){
+        if(filter){
             posts = posts.filter(post => post.type === filter)
         }
-        
-        // calculate how many pages to create from the data set
+
+        // calculate length to determine how many pages to create from the data set or show noPosts message
         length = posts.length
+
+        // handle 'no results' case
+        if(!length){
+            noPosts()
+            return
+        }
+
         numberOfPages = Math.ceil(length / postsPerPage)
+        
+        // update the navigation arrows based on the results of the filter
+        toggleNavArrows(currentPage, numberOfPages, nextPageButton, previousPageButton)
 
-        console.log('length is ', length)
-        console.log('number of pages is ', numberOfPages)
-
-        // either create the page or let users no there are no available posts
-        // @TODO: make createEmptyPage function (sets updatesBox content to text that says 'No posts available' or 'No posts of category _____ available')
-        // posts.length ? createNewPage(posts) : createEmptyPage()
         createNewPage(posts)
     })
 }
@@ -94,7 +98,7 @@ const navButtonClick = direction => {
     // update currentPage and clear updatesBox of old content
     currentPage = changePage(direction, currentPage, updatesBox)
     
-    getPageData(selectedCategory)
+    selectedCategory === 'None' ? getPageData() : getPageData(selectedCategory)
 
     toggleNavArrows(currentPage, numberOfPages, nextPageButton, previousPageButton)
 }
@@ -104,13 +108,14 @@ previousPageButton.onclick = () => navButtonClick('')
 
 
 /****** Category Filter ******/
-// issue: current set up will only filter the visible page. Need to 
 const filterCategories = () => {
     // get a handle on the selected category
     selectedCategory = filter.options[filter.selectedIndex].text.trim()
 
-    // clear the jawn
-    updatesBox.innerHTML = ''
+    // clear the jawn (while(parent.firstChild) is apparently faster than parent.innerHTML = '')
+    while(updatesBox.firstChild){
+        updatesBox.removeChild(updatesBox.firstChild)
+    }
 
     // call getPageData with the included filter (or lack thereof)
     selectedCategory === 'None' ? getPageData() : getPageData(selectedCategory)
@@ -118,6 +123,18 @@ const filterCategories = () => {
 
 filter.onchange = () => filterCategories()
 
+// handle a no posts case
+const noPosts = () => {
+    const noResults = document.createElement('h2')
+    noResults.textContent = 'No posts found'
+    noResults.id = 'no-results-post-filter'
+
+    while(updatesBox.firstChild){
+        updatesBox.removeChild(updatesBox.firstChild)
+    }
+
+    updatesBox.appendChild(noResults)
+}
 
 // on load, create the first page (with db, getPageData will be refactored to return a data PROMISE, which will replace all instances of dummyData etc., and then createNewPage() will be called here w/that object instead)
 getPageData()
