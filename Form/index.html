@@ -38,7 +38,7 @@
     <div id="toggle-buttons-wrapper">
         <button id="reset-form-view-button">&#8249;</button>
         <button class="toggle-button new-post-button">New Post</button>
-        <form id="new-form" method="post">
+        <form id="new-form" method="post" enctype="multipart/form-data">
             <fieldset name="title" form="news-form">
                 <label for="title">Title: </label>
                 <input required type="text" name="title" id="title">
@@ -66,8 +66,7 @@
     
             <fieldset name="img" form="news-form">
                 <label for="img">Image: </label>
-                <input required type="text" name="img" id="img">
-                <!-- <input required type="file" name="img" id="img" accept="image/png, image/jpeg"> -->
+                <input required type="file" name="img" id="img" accept="image/png, image/jpeg">
             </fieldset>
     
             <fieldset name="blurb" form="news-form">

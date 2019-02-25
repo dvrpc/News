@@ -13,7 +13,7 @@ module.exports = db.define('BlogPost', {
         allowNull: false
     },
     img: {
-        type: STRING,
+        type: TEXT,
         allowNull: false
     },
     blurb: {

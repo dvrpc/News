@@ -30,14 +30,13 @@ h1{
     text-align: center;
 }
 #instructions{
-    padding-left: 5%;
+    text-align: center;
 }
 ul{
     list-style-type: none;
-    padding-left: 15%;
 }
 li{
-    margin: 5px 0;
+    margin: 8px 0;
 }
 #sublist{
     padding-left: 5%;
@@ -68,17 +67,17 @@ hr{
     font-weight: 900;
     padding: 0px 12px 4px 12px;
     line-height: normal;
+    align-self: flex-start;
 }
 #reset-form-view-button:hover{
     cursor: pointer;
     background: #323232;
 }
 .toggle-button{
-    margin-top: 13%;
     font-size: 1rem;
     background: transparent;
-    padding: 8px 16px;
-    border-radius: 5px;
+    padding: 8px 35px;
+    border-radius: 3px;
 }
 .toggle-button:hover{
     color: #fbfbff;

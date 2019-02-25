@@ -41,38 +41,54 @@ backButton.onclick = () => resetForms()
 
 /****** API Calls ******/
 // POST or PUT data and give user feedback
-postData = async (data, endpoint, method) => {
-    const options = data => {
-        return {
-            method,
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Access-Control-Allow-Origin': 'http://intranet.dvrpc.org/'
-            },
-            body: JSON.stringify(data)
+postData = (data, endpoint, method) => {
+    
+    // add filereader codeblock here b/c the POST has to happen within the scope (otherwise the entire back end needs to be updated)
+    const reader = new FileReader()
+
+    // do all of the processing inside the scope of the filerReader
+    reader.onloadend = async () => {
+        // get the img as a base64 encoded string
+        data.img = reader.result
+        
+        const options = data => {
+            return {
+                method,
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Access-Control-Allow-Origin': 'http://intranet.dvrpc.org/'
+                },
+                body: JSON.stringify(data)
+            }
+        }
+
+        try{
+            const stream = await fetch(`http://10.1.1.194:3001/api/${endpoint}`, options(data))
+        
+            if(stream.ok){
+                let customSuccess;
+        
+                method === 'POST' ? customSuccess = 'Post added to database,' : customSuccess = 'Post updated,'
+                const success = `Success! ${customSuccess} please navigate to staging.dvrpc.org/newsroom/news to see the updated page.`
+        
+                alert(success)
+                window.location.reload(true)
+            }else{
+                let customFail;
+        
+                method === 'POST' ? customFail = 'added.' : customFail = 'updated.'
+                const fail = `Something went wrong and the post wasn't ${customFail} Please try again.`
+        
+                alert(fail)
+            }
+        }catch(error){
+            console.error(error)
         }
     }
 
-    const stream = await fetch(`http://10.1.1.194:3001/api/${endpoint}`, options(data))
-
-    if(stream.ok){
-        let customSuccess;
-
-        method === 'POST' ? customSuccess = 'Post added to database,' : customSuccess = 'Post updated,'
-        const success = `Success! ${customSuccess} please navigate to staging.dvrpc.org/newsroom/news to see the updated page.`
-
-        alert(success)
-        window.location.reload(true)
-    }else{
-        let customFail;
-
-        method === 'POST' ? customFail = 'added.' : customFail = 'updated.'
-        const fail = `Something went wrong and the post wasn't ${customFail} Please try again.`
-
-        alert(fail)
-    }
+    reader.readAsDataURL(data.img)
 }
 
 // GET existing posts to edit
@@ -122,7 +138,7 @@ formatInputs = e => {
     let postData = {}
     const data = new FormData(e.target)
 
-    // extract the key/value pairs and sanitize
+    // extract the key/value pairs and sanitize (do more sanitization here. Maybe add a regex before/after trim that searches for and removes special characters)
     for(var [key, value] of data.entries()) {
         switch(key){
             case 'title':
@@ -132,7 +148,7 @@ formatInputs = e => {
                 postData.link = value.trim()
                 break
             case 'img':
-                postData.img = value.trim()
+                postData.img = value
                 break
             case 'blurb':
                 postData.blurb = value.trim()
@@ -144,6 +160,7 @@ formatInputs = e => {
                 console.log('suh dude')
         }
     }
+
     return postData
 }
 
@@ -183,12 +200,13 @@ editPostForm.onsubmit = e => {
             alert(response + '. Please try again')
         // otherwise return a pre-populated submission form
         }else{
+            console.log('response img ', response.img)
             // change the form status from 'edit-search' to 'edit'
             editPostForm.id = 'edit-form'
             editPostForm.innerHTML = `
                 <fieldset name="title" form="edit-form" method="post">
                     <label for="title">Title: </label>
-                    <input required type="text" name="title" id="title" value=${response.title}>
+                    <input required type="text" name="title" id="title" value="${response.title}">
                 </fieldset>
 
                 <fieldset name="type" form="edit-form">
@@ -213,7 +231,7 @@ editPostForm.onsubmit = e => {
 
                 <fieldset name="img" form="edit-form">
                     <label for="img">Image: </label>
-                    <input required type="text" name="img" id="img" value=${response.img}>
+                    <input required type="file" name="img" id="img" accept="image/png, image/jpeg">
                 </fieldset>
 
                 <fieldset name="blurb" form="edit-form">
@@ -223,7 +241,7 @@ editPostForm.onsubmit = e => {
 
                 <div id="edit-form-buttons">
                     <button name="edit" class="toggle-button edit-post-button post-button" id="submit-edited-post">Submit Edit</button>
-                    <button type="submit" name="delete" class="toggle-button delete-post-button" id="delete-post">Delete Post</button>
+                    <button name="delete" class="toggle-button delete-post-button" id="delete-post">Delete Post</button>
                 </div>
             `
 
