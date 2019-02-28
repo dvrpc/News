@@ -32,7 +32,7 @@ api.get('/getTop18', (req, res, next) => {
 
 // find the post to edit
 api.get('/getPost/:title', (req, res, next) => {
-    BlogPost.findOne({
+    BlogPost.findAll({
         where: {
             title: req.params.title
         } 
@@ -54,20 +54,11 @@ api.put('/updatePost/:title', (req, res, next) => {
 })
 
 // delete a selected post
-api.delete('/deletePost/:title', (req, res, next) => {
-    // destroy() needs id, so use title to pull the entry from the db and then use its id to call destroy()
-    BlogPost.findOne({
-        where: {
-            title: req.params.title
-        }
+api.delete('/deletePost/:id', (req, res, next) => {
+    BlogPost.destroy({
+        where: {id: req.params.id}
     })
-    .then(post => {
-        BlogPost.destroy({
-            where: {id: post.id}
-        })
-        .then(destroyed => destroyed ? res.status(204).send() : res.status(404).send())
-        .catch(next)
-    })
+    .then(destroyed => destroyed ? res.status(204).send() : res.status(404).send())
     .catch(next)
 })
 
