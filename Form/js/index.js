@@ -48,6 +48,7 @@ postData = (data, endpoint, method) => {
 
     // do all of the processing inside the scope of the filerReader
     reader.onloadend = async () => {
+
         // get the img as a base64 encoded string
         data.img = reader.result
         
@@ -91,6 +92,40 @@ postData = (data, endpoint, method) => {
     reader.readAsDataURL(data.img)
 }
 
+// In the case of multiple responses from search, create a modal that lets the user choose which response they want
+createSelectorModal = response => {
+    const title = response[0].title
+    let listItems = ''
+
+    // get unique information from the list of duplicates and present them as <li>
+    response.forEach((el, index) => {
+        
+        // give each li an index which can be used to lookup its corresponding response object
+        listItems += `
+        <li id=${index} class="options">
+            <strong>Blurb: </strong> ${el.blurb} <br />
+            <strong>Link: </strong> ${el.link}
+        </li>
+        <hr />
+        `
+    })
+
+    const modal = `
+    <div id="modal" role="dialog">
+        <div id="modal-content">
+            <span id="close-modal">&times;</span>
+            <h2 class="modal-headers">Multiple posts with the title "${title}" found</h2>
+            <h3 class="modal-headers">Please click the one you want to edit:</h3>
+            <ul id="options-list">
+                ${listItems}
+            </ul>
+        </div>
+    </div>
+    `
+    
+    editPostForm.insertAdjacentHTML('beforebegin', modal)
+}
+
 // GET existing posts to edit
 findEntry = async title => {
     const options = {
@@ -105,7 +140,46 @@ findEntry = async title => {
     let response;
 
     // return data or a useful error message
-    stream.ok === true ? response = await stream.json() : response = stream.statusText
+    //stream.ok === true ? response = await stream.json() : response = stream.statusText
+
+    if(stream.ok === true){
+        response = await stream.json()
+        
+        // figure out if there's one or multiple responses
+        // if one, extract it as post
+        // if multiple, list them out in a modal and set response to the user selected choice
+        if(response.length === 1){
+            response = response[0]
+        }else{
+            createSelectorModal(response)
+            let chosen;
+
+            const optionsList = document.querySelector('#options-list')
+    
+            optionsList.onclick = e => {
+                const node = e.target.nodeName
+        
+                if(node != 'UL'){
+                    const id = e.target.id
+                    chosen = response[id]
+                    return chosen
+                }
+            }
+        
+            // @TODO: 
+                // extract the value of chosen and return it
+                // clicking on a list item triggers the close modal function
+        }
+
+    }else{
+        response = stream.statusText
+    }
+
+    console.log('response after the jawn sesh ', response)
+
+    // need to add some kind of wait step here - until response is defined, don't return response
+    // this is to allow time for users to select an option from the modal, in case that happens
+    // ex: while(!response){do nothing? or something? this seems like a bad approach}
 
     return response
 }
@@ -138,23 +212,27 @@ formatInputs = e => {
     let postData = {}
     const data = new FormData(e.target)
 
-    // extract the key/value pairs and sanitize (do more sanitization here. Maybe add a regex before/after trim that searches for and removes special characters)
+    // extract the key/value pairs and sanitize
     for(var [key, value] of data.entries()) {
+
+        // basic input sanitization before adding to the object (except for the uploaded img, which is an object)
+        var safeValue = key !== 'img' ? value.trim() : value
+
         switch(key){
             case 'title':
-                postData.title = value.trim()
+                postData.title = safeValue
                 break
             case 'link':
-                postData.link = value.trim()
+                postData.link = safeValue
                 break
             case 'img':
-                postData.img = value
+                postData.img = safeValue
                 break
             case 'blurb':
-                postData.blurb = value.trim()
+                postData.blurb = safeValue
                 break
             case 'type':
-                postData.type = value.trim()
+                postData.type = safeValue
                 break
             default:
                 console.log('suh dude')
@@ -195,12 +273,14 @@ editPostForm.onsubmit = e => {
 
     // depending on the reponse status, either create a pre-populated form or send some kind of 'post not found, please try again' message
     post.then(response => {
+        
         //check if there's been an error
         if(typeof response === 'string'){
             alert(response + '. Please try again')
+
         // otherwise return a pre-populated submission form
         }else{
-            console.log('response img ', response.img)
+
             // change the form status from 'edit-search' to 'edit'
             editPostForm.id = 'edit-form'
             editPostForm.innerHTML = `
@@ -236,7 +316,7 @@ editPostForm.onsubmit = e => {
 
                 <fieldset name="blurb" form="edit-form">
                     <label for="blurb">Blurb: </label>
-                    <input required type="text" name="blurb" id="blurb" value="${response.blurb}">
+                    <textarea required name="blurb" id="blurb">${response.blurb}</textarea>
                 </fieldset>
 
                 <div id="edit-form-buttons">
