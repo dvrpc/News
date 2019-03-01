@@ -42,10 +42,10 @@ api.get('/getPost/:title', (req, res, next) => {
 })
 
 // update the edited post
-api.put('/updatePost/:title', (req, res, next) => {    
+api.put('/updatePost/:id', (req, res, next) => {
     return BlogPost.update(req.body, {
         where: {
-            title: req.params.title
+            id: req.params.id
         },
         returning: false
     })
