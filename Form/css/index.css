@@ -100,7 +100,7 @@ hr{
 }
 
 /* Submit New Post Form */
-form{
+form:not(#options-form){
     width: 80%;
     display: none;
     flex-direction: column;
@@ -112,11 +112,11 @@ fieldset{
     width: 100%;
     border: none;
 }
-label{
+label:not(.options-label){
     font-weight: 800;
     width: 10%;
 }
-input, select{
+input:not(.options), select{
     width: 60%;
 }
 select{
@@ -164,6 +164,7 @@ select{
 }
 /* take up the whole screen and grey out whatever isn't in #modal-content */
 #modal{
+    display: none;
     position: fixed;
     left: 0%;
     top: 0;
@@ -191,10 +192,30 @@ select{
 .modal-headers{
     text-align: center;
 }
+.options-label-wrapper{
+    margin-left: 5%;
+    margin-top: -24px;
+}
 .options {
     padding: 3% 1%;
 }
-.options:hover{
+.options:hover, .options-label:hover{
     cursor: pointer;
     background: #d9d9d9;
+}
+#options-form{
+    padding: 2% 0;
+}
+#options-button{
+    border: 2px solid #1b998b;
+    font-size: 1rem;
+    background: transparent;
+    padding: 8px 35px;
+    border-radius: 3px;
+    display: block;
+    margin: 0 auto;
+}
+#options-button:hover{
+    color: #f7f7f7;
+    background: #1b998b;
 }
