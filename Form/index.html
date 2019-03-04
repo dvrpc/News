@@ -52,6 +52,7 @@
             <button id="reset-form-view-button">&#8249;</button>
             <button class="toggle-button new-post-button">New Post</button>
             <form id="new-form" method="post" enctype="multipart/form-data">
+                <h2 id="edit-title">New Post:</h2>
                 <fieldset name="title" form="news-form">
                     <label for="title">Title: </label>
                     <input required type="text" name="title" id="title">
@@ -93,7 +94,7 @@
             <button class="toggle-button edit-post-button">Edit Post</button>
             
             <form id="edit-form-search">
-                <fieldset name="search" form="edit-form-search">
+                <fieldset id="search-fieldset" name="search" form="edit-form-search">
                     <label for="search-entries">Search Posts: </label>
                     <input type="search" name="search-entries" id="search-entries" />
                 </fieldset>

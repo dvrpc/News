@@ -77,7 +77,7 @@ li{
 #toggle-buttons-wrapper{
     width: 50%;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
     background: #ecebe4;
 }
 #reset-form-view-button{
@@ -99,8 +99,9 @@ li{
 .toggle-button{
     font-size: 1rem;
     background: transparent;
-    padding: 8px 35px;
+    padding: 8px 32px;
     border-radius: 3px;
+    margin-top: 5%;
 }
 .toggle-button:hover{
     color: #fbfbff;
@@ -109,20 +110,15 @@ li{
 .post-button{
     margin-top: 0;
 }
+
+
+/* Submit New Post Form */
 .new-post-button{
     border: 2px solid #3626a7;
 }
 .new-post-button:hover{
     background: #3626a7;
 }
-.edit-post-button{
-    border: 2px solid #1b998b;
-}
-.edit-post-button:hover{
-    background: #1b998b;
-}
-
-/* Submit New Post Form */
 form:not(#options-form){
     width: 100%;
     display: none;
@@ -140,14 +136,14 @@ label:not(.options-label){
     width: 10%;
 }
 input:not(.options), select{
-    width: 60%;
+    width: 80%;
 }
 select{
     text-align: center;
 }
 #blurb{
     min-height: 250px;
-    width: 60%;
+    width: 80%;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 0.9rem;
 }
@@ -155,13 +151,28 @@ select{
     margin-top: 0;
 }
 
+
 /* Edit Posts */
+#search-fieldset{
+    display: block;
+    margin: 10% 0;
+}
+#search-entries{
+    padding: 8px;
+}
+.edit-post-button{
+    border: 2px solid #1b998b;
+}
+.edit-post-button:hover{
+    background: #1b998b;
+}
 #delete-post{
-    border: 2px solid #ff331f;
+    border: 2px solid #f8333c;
 }
 #delete-post:hover{
-    background: #ff331f;
+    background: #f8333c;
 }
+
 
 /* Modal */
 #modal-toggle, #modal-content{
@@ -171,7 +182,6 @@ select{
     cursor: pointer;
 }
 #modal-toggle{
-    /* toggle positioning depending on where your modal-toggle is */
     position: absolute;
     z-index: 2;
     margin: 0;
@@ -185,7 +195,6 @@ select{
     text-align: center;
     border-radius: 4px;
 }
-/* take up the whole screen and grey out whatever isn't in #modal-content */
 #modal{
     display: none;
     position: fixed;
@@ -216,8 +225,7 @@ select{
     text-align: center;
 }
 .options-label-wrapper{
-    margin-left: 5%;
-    margin-top: -24px;
+    margin: -25px 0 5% 5%;
 }
 .options {
     padding: 3% 1%;
@@ -233,7 +241,7 @@ select{
     border: 2px solid #1b998b;
     font-size: 1rem;
     background: transparent;
-    padding: 8px 35px;
+    padding: 8px 32px;
     border-radius: 3px;
     display: block;
     margin: 0 auto;

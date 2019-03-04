@@ -121,7 +121,6 @@ const populateSelectorModal = response => {
                 <strong>Link: </strong> ${el.link}
             </div>
         </label>
-        <hr />
         `    
     })
 
