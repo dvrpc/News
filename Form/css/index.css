@@ -1,6 +1,5 @@
 /* General */
 body{
-    background: #f7f7f7;
     font-size: 16px;
     margin: 0;
     font-family: 'IBM Plex Sans', sans-serif;
@@ -9,6 +8,7 @@ body{
 
 /* Nav */
 nav{
+    position: relative;
     background: #fff;
     width: 100%;
     height: 6vh;
@@ -24,43 +24,66 @@ nav{
     align-items: center;
 }
 
-/* Instructions */
+
+/* Header */
 h1{
     font-size: 2rem;
     text-align: center;
 }
+
+
+/* Main Wrapper */
+main{
+    height: 94vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.sections{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 2%;
+}
+
+
+/* Instructions */
+#header{
+    justify-self: flex-start;
+}
 #instructions{
+    width: 50%;
+    justify-content: center;
+    background: #ff6f59;
+    color: #25283d;
+}
+#instructions-intro{
+    font-size: 1.1rem;
+    font-weight: 500;
     text-align: center;
+    margin: 0;
+    padding-bottom: 3%;
 }
 ul{
     list-style-type: none;
+    margin: 0 auto;
 }
 li{
-    margin: 8px 0;
-}
-#sublist{
-    padding-left: 5%;
-    margin: 5px 0;
-}
-
-hr{
-    margin: 3%;
-    color: #424c55;
+    margin: 15px 0;
 }
 
 
 /* Toggles */
 #toggle-buttons-wrapper{
-    width: 90%;
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    margin: 0 auto;
+    width: 50%;
+    align-items: center;
+    justify-content: space-evenly;
+    background: #ecebe4;
 }
 #reset-form-view-button{
     display: none;
     border: none;
-    background: #a1a1a1;
+    background: #25283d;
     color: #fff;
     border-radius: 50%;
     font-size: 1.5rem;
@@ -71,7 +94,7 @@ hr{
 }
 #reset-form-view-button:hover{
     cursor: pointer;
-    background: #323232;
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
 }
 .toggle-button{
     font-size: 1rem;
@@ -101,7 +124,7 @@ hr{
 
 /* Submit New Post Form */
 form:not(#options-form){
-    width: 80%;
+    width: 100%;
     display: none;
     flex-direction: column;
     align-items: center;

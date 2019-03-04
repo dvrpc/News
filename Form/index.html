@@ -27,78 +27,80 @@
             <h2 id="modal-subheader" class="modal-headers"></h2>
             <h3 class="modal-headers">Please click the one you want to edit:</h3>
             <form id="options-form">
-                ${optionInputs}
                 <button id="options-button" class="toggle-button" type="submit">Confirm</button>
             </form>
         </div>
     </div>
 
-    <h1>News Page Updates</h1>
+    
+    <main>
+        <section class="sections" id="instructions">
+            <h1 id="header">News Page Updates</h1>
 
-    <p id="instructions">Fill out the following fields to add a new post to the News page. The expected format for each field is as follows:</p>
-    
-    <ul>
-        <li><strong>Title: </strong> The name of the blog post i.e. "Making Trails Happen"</li>
-        <li><strong>Type: </strong> The type of post i.e. "Press Release"</li>
-        <li><strong>Link: </strong> The URL for the post content i.e. "https://www.dvrpc.org/trails/regionaltrailsprogram/"</li>
-        <li><strong>Image: </strong>Select an image to use as a background. Please limit image size to <strong>200x200</strong></li>
-        <li><strong>Blurb: </strong> The text description for the post. No real limit on length but should be at least TBD words long.</li>
-    </ul>
-
-    <hr />
-
-    <div id="toggle-buttons-wrapper">
-        <button id="reset-form-view-button">&#8249;</button>
-        <button class="toggle-button new-post-button">New Post</button>
-        <form id="new-form" method="post" enctype="multipart/form-data">
-            <fieldset name="title" form="news-form">
-                <label for="title">Title: </label>
-                <input required type="text" name="title" id="title">
-            </fieldset>
-    
-            <fieldset name="type" form="news-form">
-                <label for="type">Type: </label>
-                <select name="type" id="type">
-                    <option>Event</option>
-                    <option>Press Release</option>
-                    <option>Funding Available</option>
-                    <option>New Data</option>
-                    <option>New Report</option>
-                    <option>Announcement</option>
-                    <option>Business Opportunity</option>
-                    <option>New Webmap</option>
-                    <option>Public Meeting</option>
-                </select>
-            </fieldset>
-    
-            <fieldset name="link" form="news-form">
-                <label for="link">Link: </label>
-                <input required type="text" name="link" id="link">
-            </fieldset>
-    
-            <fieldset name="img" form="news-form">
-                <label for="img">Image: </label>
-                <input required type="file" name="img" id="img" accept="image/png, image/jpeg">
-            </fieldset>
-    
-            <fieldset name="blurb" form="news-form">
-                <label for="blurb">Blurb: </label>
-                <textarea required name="blurb" id="blurb"></textarea>
-            </fieldset>
-    
-            <button class="toggle-button new-post-button post-button" id="submit-new-post">Submit</button>
-        </form>
-    
-        <button class="toggle-button edit-post-button">Edit Post</button>
-        
-        <form id="edit-form-search">
-            <fieldset name="search" form="edit-form-search">
-                <label for="search-entries">Search Posts: </label>
-                <input type="search" name="search-entires" id="search-entries" />
-            </fieldset>
+            <h2 id="instructions-intro">Fill out the following fields to add a new post to the News page. The expected format for each field is as follows:</h2>
             
-            <button class="toggle-button edit-post-button post-button">Search</button>
-        </form>
-    </div>
+            <ul>
+                <li><strong>Title: </strong> The name of the blog post i.e. "Making Trails Happen"</li>
+                <li><strong>Type: </strong> The type of post i.e. "Press Release"</li>
+                <li><strong>Link: </strong> The URL for the post content i.e. "https://www.dvrpc.org/trails/regionaltrailsprogram/"</li>
+                <li><strong>Image: </strong>Select an image to use as a background. Please try to limit image size to <strong>200x200</strong></li>
+                <li><strong>Blurb: </strong> The text description for the post. No real limit on length but should be at least TBD words long.</li>
+            </ul>
+        </section>
+
+        <section class="sections" id="toggle-buttons-wrapper">
+            <button id="reset-form-view-button">&#8249;</button>
+            <button class="toggle-button new-post-button">New Post</button>
+            <form id="new-form" method="post" enctype="multipart/form-data">
+                <fieldset name="title" form="news-form">
+                    <label for="title">Title: </label>
+                    <input required type="text" name="title" id="title">
+                </fieldset>
+        
+                <fieldset name="type" form="news-form">
+                    <label for="type">Type: </label>
+                    <select name="type" id="type">
+                        <option>Event</option>
+                        <option>Press Release</option>
+                        <option>Funding Available</option>
+                        <option>New Data</option>
+                        <option>New Report</option>
+                        <option>Announcement</option>
+                        <option>Business Opportunity</option>
+                        <option>New Webmap</option>
+                        <option>Public Meeting</option>
+                    </select>
+                </fieldset>
+        
+                <fieldset name="link" form="news-form">
+                    <label for="link">Link: </label>
+                    <input required type="text" name="link" id="link">
+                </fieldset>
+        
+                <fieldset name="img" form="news-form">
+                    <label for="img">Image: </label>
+                    <input required type="file" name="img" id="img" accept="image/png, image/jpeg">
+                </fieldset>
+        
+                <fieldset name="blurb" form="news-form">
+                    <label for="blurb">Blurb: </label>
+                    <textarea required name="blurb" id="blurb"></textarea>
+                </fieldset>
+        
+                <button class="toggle-button new-post-button post-button" id="submit-new-post">Submit</button>
+            </form>
+        
+            <button class="toggle-button edit-post-button">Edit Post</button>
+            
+            <form id="edit-form-search">
+                <fieldset name="search" form="edit-form-search">
+                    <label for="search-entries">Search Posts: </label>
+                    <input type="search" name="search-entries" id="search-entries" />
+                </fieldset>
+                
+                <button class="toggle-button edit-post-button post-button">Search</button>
+            </form>
+        </section>
+    </main>
 </body>
 </html>

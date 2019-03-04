@@ -30,7 +30,7 @@ const resetForms = () => {
     editPostForm.innerHTML = `
         <fieldset name="search" form="edit-form-search">
             <label for="search-entries">Search Posts: </label>
-            <input type="search" name="search-entires" id="search-entries" />
+            <input type="search" name="search-entries" id="search-entries" />
             <button class="toggle-button edit-post-button post-button">Search</button>
         </fieldset>
     `
@@ -194,6 +194,8 @@ const formatInputs = e => {
         // basic input sanitization before adding to the object (except for the uploaded img, which is an object)
         var safeValue = key !== 'img' ? value.trim() : value
 
+        console.log('key ', key)
+
         switch(key){
             case 'title':
                 postData.title = safeValue
@@ -281,21 +283,21 @@ const createEditFormAndHandleUserInput = response => {
     // flip deletePost bool if the delete button is selected
     deleteButton.onfocus = e => deletePost = true
 
-    const formattedTitle = encodeURI(response.title)
+    //const formattedTitle = encodeURI(response.title)
     const id = response.id
     
     // edit or delete the post, depending on which button was used to submit
-    updatePostForm.onsubmit = e => submitEditOrDelete(e, deletePost, formattedTitle, id)
+    updatePostForm.onsubmit = e => submitEditOrDelete(e, deletePost, id)
 }
 
 // Edit or delete an existing Post
-const submitEditOrDelete = (e, deletePost, title, id) => {
+const submitEditOrDelete = (e, deletePost, id) => {
     e.preventDefault()
 
     // depending on user input, either update or destroy the post
     if(!deletePost){
         const data = formatInputs(e)
-        postData(data, `updatePost/${title}`, 'PUT')
+        postData(data, `updatePost/${id}`, 'PUT')
     }else{
         deleteEntry(id)
     }
@@ -330,9 +332,9 @@ editPostForm.onsubmit = e => {
                 optionsForm.onsubmit = e => {
                     e.preventDefault()
                     index = document.querySelector('input[name="options"]:checked').value
-                    ariaHideModal()
                     response = response[index]
                     createEditFormAndHandleUserInput(response)
+                    ariaHideModal()
                 }
             }
         }
