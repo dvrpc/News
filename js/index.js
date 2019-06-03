@@ -11,13 +11,12 @@ const filter = document.querySelector('#cat-filter')
 
 // Variables for Pagination Functions
 let currentPage = 1
-const postsPerPage = 6
+const postsPerPage = 4
 let numberOfPages;
 let pageContents;
-let selectedCategory = 'None'
+let selectedCategory = 'View All'
 let length;
 
-// test to get the jawns (it works. neat-o)
 const getPosts = async () => {
     try{
         const stream = await fetch('http://10.1.1.194:3001/api/getTop18')
@@ -61,6 +60,21 @@ const createNewPage = posts => {
                 toggleNavArrows(currentPage, numberOfPages, nextPageButton, previousPageButton)
             }
         }
+
+        // get a handle on the img and title so that hover effects can jawn em up
+        let [img, title] = [...updatesItem.children]        
+
+        // change background and link color on hover, remove them on mouse leave
+        updatesItem.onmouseenter = () => {
+            updatesItem.style.cursor = 'pointer'
+            title.style.color = '#03688d'
+            img.style.background = '#03688D'
+        }
+        updatesItem.onmouseleave = () => {
+            updatesItem.style.cursor = ''
+            title.style.color = ''
+            img.style.background = `url('${post.img}') center no-repeat`
+        }
     })
 }
 
@@ -71,14 +85,16 @@ const getPageData = async filter => {
         if(filter){
             posts = posts.filter(post => post.type === filter)
 
+            // force currentPage to 1 to reset the pagination jawn
+            currentPage = 1
+
             // handle 'no results' case
             if(!posts.length){
+                numberOfPages = 1
+                toggleNavArrows(currentPage, numberOfPages, nextPageButton, previousPageButton)
                 noPosts()
                 return
             }
-            
-            // force currentPage to 1 to reset the pagination jawn
-            currentPage = 1
         }
 
         // calculate length to determine how many pages to create from the data set or show noPosts message
@@ -100,7 +116,7 @@ const navButtonClick = direction => {
     // update currentPage and clear updatesBox of old content
     currentPage = changePage(direction, currentPage, updatesBox)
     
-    selectedCategory === 'None' ? getPageData() : getPageData(selectedCategory)
+    selectedCategory === 'View All' ? getPageData() : getPageData(selectedCategory)
 
     toggleNavArrows(currentPage, numberOfPages, nextPageButton, previousPageButton)
 }
@@ -120,7 +136,7 @@ const filterCategories = () => {
     }
 
     // call getPageData with the included filter (or lack thereof)
-    selectedCategory === 'None' ? getPageData() : getPageData(selectedCategory)
+    selectedCategory === 'View All' ? getPageData() : getPageData(selectedCategory)
 }
 
 filter.onchange = () => filterCategories()
