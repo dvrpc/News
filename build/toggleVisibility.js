@@ -1,0 +1,2 @@
+/****** Function to toggle updates-box main content visibility ******/const toggleContentVisibility=function(a,b){""===a?removeDetailBox():null;const c=b.children,d=c.length;// show/hide updates-box content 
+for(var e=0;e<d;e++)c[e].style.display=a},removeDetailBox=function(){const a=document.querySelector("#detail-view-container");a.parentNode.removeChild(a)};/****** Helper Function to remove the detail page ******/export{toggleContentVisibility};

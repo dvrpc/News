@@ -1,0 +1,31 @@
+{
+  "name": "news",
+  "version": "1.0.0",
+  "description": "news room blog ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dvrpc/News.git"
+  },
+  "keywords": [
+    "dvrpc",
+    "news"
+  ],
+  "author": "marc molta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dvrpc/News/issues"
+  },
+  "homepage": "https://github.com/dvrpc/News#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-transform-arrow-functions": "^7.2.0",
+    "@babel/plugin-transform-async-to-generator": "^7.4.4",
+    "@babel/plugin-transform-template-literals": "^7.4.4",
+    "babel-preset-minify": "^0.5.0"
+  }
+}
