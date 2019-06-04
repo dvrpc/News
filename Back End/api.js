@@ -30,6 +30,13 @@ api.get('/getTop18', (req, res, next) => {
     .catch(next)
 })
 
+// get all posts for the archive page
+api.get('/getAll', (req, res, next) => {
+    BlogPost.findAll({})
+    .then(posts => res.send(posts))
+    .catch(next)
+})
+
 // find the post to edit
 api.get('/getPost/:title', (req, res, next) => {
     BlogPost.findAll({
