@@ -6,7 +6,7 @@ const BlogPost = models.BlogPost
 
 /****** Add new Posts to the DB ******/
 // create a new post
-api.post('/addPost', (req, res, next) => {    
+api.post('/addPost', (req, res, next) => {
     BlogPost.create(req.body).then(post => {
         res.json({
             title: post.title,
