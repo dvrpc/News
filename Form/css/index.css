@@ -136,14 +136,14 @@ label:not(.options-label){
     width: 10%;
 }
 input:not(.options), select{
-    width: 80%;
+    width: 100%;
 }
 select{
     text-align: center;
 }
 #blurb{
     min-height: 250px;
-    width: 80%;
+    width: 100%;
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 0.9rem;
 }
