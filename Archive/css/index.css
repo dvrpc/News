@@ -1,0 +1,71 @@
+/* Category filter */
+#filter-wrapper{
+    margin-bottom: 2em;
+    text-align: center;
+}
+#no-results-post-filter{
+    text-align: center;
+}
+#cat-filter-label{
+    padding-right: 1%;
+}
+
+
+/* The detail items */
+#details-wrapper{
+    padding: 0;
+}
+details{
+    font-family: Roboto,"Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    width: 100%;
+    background: #f7f7f7;
+}
+.year-details {
+    margin-bottom: 2%;
+}
+.month-details {
+    width: 97%;
+    margin: 3px 0 0 auto;
+    padding: 3px 0;
+    background: #fefefe;
+}
+summary {
+    padding: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 3px;
+}
+.year-summary {
+    box-shadow: 1px 2px 3px rgba(0,0,0,0.4);
+    color: #03688d;
+}
+.month-summary.active {
+    background: #03688d;
+    color: #f7f7f7;
+}
+summary:hover{
+    cursor: pointer;
+    background: #eee;
+}
+summary::after{
+    content: '\02795';
+    float: right;
+}
+summary.active::after{
+    content: '\2212';
+}
+.list-group {
+    width: 98%;
+    margin: 0 auto;
+    background: #e7e7e7;
+    box-shadow: none;
+}
+
+
+/* The posts */
+.post-img{
+    float: right;
+    width: 150px;
+    margin-left: 3%;
+    border-radius: 10px;
+}
