@@ -44,6 +44,7 @@ body{
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
+    width: 100%;
 }
 #updates-box-nav-left{
     display: none;
@@ -56,7 +57,7 @@ body{
     position: relative;
     border-radius: 10px;
     width: 200px;
-    height: 140px;
+    height: 145px;
     margin: 0 auto;
 }
 .updates-item-img-type{
@@ -75,7 +76,7 @@ body{
     text-align: center;
     text-decoration: underline;
     margin: 0 auto;
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 
 /******* Updates Box Detail View  *******/
@@ -92,8 +93,8 @@ body{
 #detail-view-img{
     margin: 3% 0 3% 3%;
     float: right;
-    width: 125px;
-    height: 100px;
+    width: 145px;
+    height: 115px;
 }
 #detail-view-img:hover{
     cursor: auto;
@@ -153,11 +154,11 @@ body{
         padding: 0px 12px 5px 12px;
     }
     .updates-item{
-        width: 45%;
+        width: 85%;
     }
     .updates-item-img-container{
-        width: 110px;
-        height: 85px;
+        width: 125px;
+        height: 100px;
     }
 
     /* Detail View */
