@@ -53,6 +53,7 @@ close.onclick = function(){ariaHideModal()}
 
 /****** API Calls ******/
 // POST or PUT data and give user feedback
+// add a parameter here for old images being kept on edit
 const postData = (data, endpoint, method) => {
     
     // add filereader codeblock here b/c the POST has to happen within the scope (otherwise the entire back end needs to be updated)
@@ -62,6 +63,7 @@ const postData = (data, endpoint, method) => {
     reader.onloadend = async () => {
 
         // get the img as a base64 encoded string
+        // check here for the new paramater of old images
         data.img = reader.result
         
         const options = data => {
@@ -101,6 +103,7 @@ const postData = (data, endpoint, method) => {
         }
     }
 
+    // this is the tricky part about keeping imgs. How do you pass null here w/o throwing an error on reader.loadend?
     reader.readAsDataURL(data.img)
 }
 
@@ -182,6 +185,7 @@ const deleteEntry = async id => {
 
 /****** Form Submission (CRUD) ******/
 // Format the Inputs
+// add a parameter for imgs from edit (e, keepOldImgOnEdit)
 const formatInputs = e => {
     e.preventDefault()
     let postData = {}
@@ -193,8 +197,6 @@ const formatInputs = e => {
         // basic input sanitization before adding to the object (except for the uploaded img, which is an object)
         var safeValue = key !== 'img' ? value.trim() : value
 
-        console.log('key ', key)
-
         switch(key){
             case 'title':
                 postData.title = safeValue
@@ -203,6 +205,7 @@ const formatInputs = e => {
                 postData.link = safeValue
                 break
             case 'img':
+                // check if keepOldImgOnEdit exists so: postData.img = keepOldImgOnEdit || safeValue
                 postData.img = safeValue
                 break
             case 'blurb':
@@ -223,6 +226,29 @@ const formatInputs = e => {
 newPostForm.onsubmit = e => {
     const data = formatInputs(e)
     postData(data, 'addPost', 'POST')
+}
+
+// helper function to handle user choice on img edits
+const handleImgEdit = e => {
+    const btn = e.target
+    const btnName = btn.id.split('-')[0]
+
+    // yes button: remove img-bool-wrapper, get a handle on img-edit-label and insert willEditImg afterend
+    if(btnName === 'yes') {
+        const willEditImg = `<input required type="file" name="img" id="img" accept="image/png, image/jpeg">`
+        const editImgWrapper = e.target.parentElement
+        const editImgLabel = editImgWrapper.previousElementSibling
+
+        editImgWrapper.remove()
+        editImgLabel.insertAdjacentHTML('afterend', willEditImg)
+
+    // no button: hide yes button, pass value of response.img
+    }else {
+        const yesBtn = btn.previousElementSibling
+        
+        // handle accidentally clicking 'no' twice and removing the 'new img' label
+        if(yesBtn.nodeName === 'BUTTON') yesBtn.style.display = 'none'
+    }
 }
 
 // helper function to handle user input in the case of multiple found posts
@@ -257,8 +283,11 @@ const createEditFormAndHandleUserInput = response => {
         </fieldset>
 
         <fieldset name="img" form="edit-form">
-            <label for="img">Image: </label>
-            <input required type="file" name="img" id="img" accept="image/png, image/jpeg">
+            <label id="img-edit-label" for="img">New Img? </label>
+            <div id="img-bool-wrapper">
+                <button class="img-bool-btn" id="yes-new-img"type="button">Yes</button>
+                <button class="img-bool-btn" id="no-new-img"type="button">No</button>
+            </div>
         </fieldset>
 
         <fieldset name="blurb" form="edit-form">
@@ -274,8 +303,12 @@ const createEditFormAndHandleUserInput = response => {
 
     editPostForm.insertAdjacentHTML('afterbegin', `<h2 id="edit-title">Edit Post "${response.title}":</h2>`)
 
+    const editImg = document.querySelector('#img-bool-wrapper')
     const updatePostForm = document.querySelector('#edit-form')
     const deleteButton = document.querySelector('#delete-post')
+
+    // handle img updates/lack thereof
+    editImg.onclick = e => handleImgEdit(e)
 
     let deletePost = false
 
@@ -286,6 +319,7 @@ const createEditFormAndHandleUserInput = response => {
     const id = response.id
     
     // edit or delete the post, depending on which button was used to submit
+    // img handling: pass response.img into this function
     updatePostForm.onsubmit = e => submitEditOrDelete(e, deletePost, id)
 }
 
@@ -295,6 +329,7 @@ const submitEditOrDelete = (e, deletePost, id) => {
 
     // depending on user input, either update or destroy the post
     if(!deletePost){
+        // take the passed response.img and pass it to formatInputs here
         const data = formatInputs(e)
         postData(data, `updatePost/${id}`, 'PUT')
     }else{

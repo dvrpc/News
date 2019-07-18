@@ -130,6 +130,7 @@ fieldset{
     justify-content: center;
     width: 100%;
     border: none;
+    align-items: center;
 }
 label:not(.options-label){
     font-weight: 800;
@@ -159,6 +160,36 @@ select{
 }
 #search-entries{
     padding: 8px;
+}
+#img-bool-wrapper {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    align-items: center;
+}
+.img-bool-btn {
+    width: 20%;
+    text-align: center;
+    padding: 5px;
+    border-radius: 3px;
+    background: transparent;
+    font-size: 0.9rem;
+}
+.img-bool-btn:hover{
+    cursor: pointer;
+    color: #fbfbff;
+}
+#yes-new-img{
+    border: 2px solid #8b94a3;
+}
+#yes-new-img:hover {
+    background: #8b94a3;
+}
+#no-new-img{
+    border: 2px solid #cfdbd5;
+}
+#no-new-img:hover{
+    background: #cfdbd5;
 }
 .edit-post-button{
     border: 2px solid #1b998b;
