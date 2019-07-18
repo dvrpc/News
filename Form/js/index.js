@@ -52,59 +52,68 @@ close.onclick = function(){ariaHideModal()}
 
 
 /****** API Calls ******/
-// POST or PUT data and give user feedback
-// add a parameter here for old images being kept on edit
-const postData = (data, endpoint, method) => {
-    
-    // add filereader codeblock here b/c the POST has to happen within the scope (otherwise the entire back end needs to be updated)
-    const reader = new FileReader()
-
-    // do all of the processing inside the scope of the filerReader
-    reader.onloadend = async () => {
-
-        // get the img as a base64 encoded string
-        // check here for the new paramater of old images
-        data.img = reader.result
-        
-        const options = data => {
-            return {
-                method,
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Access-Control-Allow-Origin': 'http://intranet.dvrpc.org/'
-                },
-                body: JSON.stringify(data)
-            }
-        }
-
-        try{
-            const stream = await fetch(`http://10.1.1.194:3001/api/${endpoint}`, options(data))
-        
-            if(stream.ok){
-                let customSuccess;
-        
-                method === 'POST' ? customSuccess = 'Post added to database,' : customSuccess = 'Post updated,'
-                const success = `Success! ${customSuccess} please navigate to staging.dvrpc.org/newsroom/news to see the updated page.`
-        
-                alert(success)
-                window.location.reload(true)
-            }else{
-                let customFail;
-        
-                method === 'POST' ? customFail = 'added.' : customFail = 'updated.'
-                const fail = `Something went wrong and the post wasn't ${customFail} Please try again.`
-        
-                alert(fail)
-            }
-        }catch(error){
-            console.error(error)
+// helper function for POSTing data so handling image updates is less cumbersome
+const makePost = async (data, endpoint, method) => {
+    const options = data => {
+        return {
+            method,
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin': 'http://intranet.dvrpc.org/'
+            },
+            body: JSON.stringify(data)
         }
     }
 
-    // this is the tricky part about keeping imgs. How do you pass null here w/o throwing an error on reader.loadend?
-    reader.readAsDataURL(data.img)
+    try{
+        const stream = await fetch(`http://10.1.1.194:3001/api/${endpoint}`, options(data))
+    
+        if(stream.ok){
+            let customSuccess;
+    
+            method === 'POST' ? customSuccess = 'Post added to database,' : customSuccess = 'Post updated,'
+            const success = `Success! ${customSuccess} please navigate to staging.dvrpc.org/newsroom/news to see the updated page.`
+    
+            alert(success)
+            window.location.reload(true)
+        }else{
+            let customFail;
+    
+            method === 'POST' ? customFail = 'added.' : customFail = 'updated.'
+            const fail = `Something went wrong and the post wasn't ${customFail} Please try again.`
+    
+            alert(fail)
+        }
+    }catch(error){
+        console.error(error)
+    }
+}
+
+// POST or PUT data and give user feedback
+const postData = (data, endpoint, method, oldImg) => {
+
+    // user doesn't update image, don't create a FileReader instance
+    if(oldImg) {
+        data.img = oldImg
+        makePost(data, endpoint, method)
+
+    // use does update image, create a FileReader instance to convert it to base64
+    }else {
+        const reader = new FileReader()
+    
+        // async so do all of the processing inside the scope of the filerReader
+        reader.onloadend = async () => {
+    
+            // get the img as a base64 encoded string
+            data.img = reader.result
+
+            // POST the data
+            makePost(data, endpoint, method)
+        }    
+        reader.readAsDataURL(data.img)
+    }
 }
 
 // In the case of multiple responses from search, create a modal that lets the user choose which response they want
@@ -148,11 +157,6 @@ const findEntry = async title => {
     let response;
 
     // return data or a useful error message
-    //stream.ok === true ? response = await stream.json() : response = stream.statusText
-
-    // the 3 response returns for each condition is a potential solution to the click ish
-
-    // straight up make this different functions. duh. duh duh duh.
     if(stream.ok === true){
         response = await stream.json()
     }else{
@@ -185,7 +189,6 @@ const deleteEntry = async id => {
 
 /****** Form Submission (CRUD) ******/
 // Format the Inputs
-// add a parameter for imgs from edit (e, keepOldImgOnEdit)
 const formatInputs = e => {
     e.preventDefault()
     let postData = {}
@@ -194,7 +197,7 @@ const formatInputs = e => {
     // extract the key/value pairs and sanitize
     for(var [key, value] of data.entries()) {
 
-        // basic input sanitization before adding to the object (except for the uploaded img, which is an object)
+        // remove whitespace before adding to the object (except for the uploaded img, which is an object)
         var safeValue = key !== 'img' ? value.trim() : value
 
         switch(key){
@@ -205,7 +208,6 @@ const formatInputs = e => {
                 postData.link = safeValue
                 break
             case 'img':
-                // check if keepOldImgOnEdit exists so: postData.img = keepOldImgOnEdit || safeValue
                 postData.img = safeValue
                 break
             case 'blurb':
@@ -230,33 +232,51 @@ newPostForm.onsubmit = e => {
 
 // helper function to handle user choice on img edits
 const handleImgEdit = e => {
+    let keepOldImg;
     const btn = e.target
     const btnName = btn.id.split('-')[0]
 
-    // yes button: remove img-bool-wrapper, get a handle on img-edit-label and insert willEditImg afterend
-    if(btnName === 'yes') {
-        const willEditImg = `<input required type="file" name="img" id="img" accept="image/png, image/jpeg">`
-        const editImgWrapper = e.target.parentElement
-        const editImgLabel = editImgWrapper.previousElementSibling
-
-        editImgWrapper.remove()
-        editImgLabel.insertAdjacentHTML('afterend', willEditImg)
-
-    // no button: hide yes button, pass value of response.img
-    }else {
-        const yesBtn = btn.previousElementSibling
+    // handle button clicks (ignore if user clicks the div but not one of the buttons)
+    switch(btnName) {
+        case 'yes':
+            const imgInput = `<input required type="file" name="img" id="img" accept="image/png, image/jpeg">`
+            const editImgWrapper = e.target.parentElement
+            const editImgLabel = editImgWrapper.previousElementSibling
         
-        // handle accidentally clicking 'no' twice and removing the 'new img' label
-        if(yesBtn.nodeName === 'BUTTON') yesBtn.style.display = 'none'
+            editImgWrapper.remove()
+            editImgLabel.insertAdjacentHTML('afterend', imgInput)
+        
+            keepOldImg = false
+            break
+        case 'no':
+            const yesBtn = btn.previousElementSibling
+        
+            // handle accidentally clicking 'no' twice and removing the 'new img' label
+            if(yesBtn.nodeName === 'BUTTON') yesBtn.style.display = 'none'
+        
+            // set 'no' btn to active style
+            btn.style.background = '#cfdbd5'
+            btn.style.color = '#fbfbff'
+            btn.style.fontWeight = 700
+        
+            keepOldImg = true;
+            break
+        default:
+            // default case - user clicked div but neither button
+            return
     }
+
+    return keepOldImg
 }
 
 // helper function to handle user input in the case of multiple found posts
 const createEditFormAndHandleUserInput = response => {
+    let keepOldImg;
 
     // change the form status from 'edit-search' to 'edit'
     editPostForm.id = 'edit-form'
     editPostForm.innerHTML = `
+        <h2 id="edit-title">Edit Post "${response.title}":</h2>
         <fieldset name="title" form="edit-form" method="post">
             <label for="title">Title: </label>
             <input required type="text" name="title" id="title" value="${response.title}">
@@ -282,7 +302,7 @@ const createEditFormAndHandleUserInput = response => {
             <input required type="text" name="link" id="link" value=${response.link}>
         </fieldset>
 
-        <fieldset name="img" form="edit-form">
+        <fieldset required name="img" form="edit-form">
             <label id="img-edit-label" for="img">New Img? </label>
             <div id="img-bool-wrapper">
                 <button class="img-bool-btn" id="yes-new-img"type="button">Yes</button>
@@ -301,37 +321,36 @@ const createEditFormAndHandleUserInput = response => {
         </div>
     `
 
-    editPostForm.insertAdjacentHTML('afterbegin', `<h2 id="edit-title">Edit Post "${response.title}":</h2>`)
-
     const editImg = document.querySelector('#img-bool-wrapper')
     const updatePostForm = document.querySelector('#edit-form')
     const deleteButton = document.querySelector('#delete-post')
 
     // handle img updates/lack thereof
-    editImg.onclick = e => handleImgEdit(e)
+    editImg.onclick = e => {
+        keepOldImg = handleImgEdit(e)
+    }
 
     let deletePost = false
 
     // flip deletePost bool if the delete button is selected
     deleteButton.onfocus = e => deletePost = true
 
-    //const formattedTitle = encodeURI(response.title)
     const id = response.id
     
-    // edit or delete the post, depending on which button was used to submit
-    // img handling: pass response.img into this function
-    updatePostForm.onsubmit = e => submitEditOrDelete(e, deletePost, id)
+    // edit or delete the post, depending on which button was used to submit. Also handle passing existing img string when necessary
+    updatePostForm.onsubmit = e => {
+        keepOldImg ? submitEditOrDelete(e, deletePost, id, response.img) : submitEditOrDelete(e, deletePost, id)
+    }
 }
 
 // Edit or delete an existing Post
-const submitEditOrDelete = (e, deletePost, id) => {
+const submitEditOrDelete = (e, deletePost, id, oldImg) => {
     e.preventDefault()
 
     // depending on user input, either update or destroy the post
     if(!deletePost){
-        // take the passed response.img and pass it to formatInputs here
         const data = formatInputs(e)
-        postData(data, `updatePost/${id}`, 'PUT')
+        oldImg ? postData(data, `updatePost/${id}`, 'PUT', oldImg) : postData(data, `updatePost/${id}`, 'PUT')
     }else{
         deleteEntry(id)
     }
