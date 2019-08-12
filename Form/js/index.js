@@ -87,6 +87,7 @@ const makePost = async (data, endpoint, method) => {
             alert(fail)
         }
     }catch(error){
+        alert('Post unable to be submited due to: ', error)
         console.error(error)
     }
 }
@@ -284,16 +285,16 @@ const createEditFormAndHandleUserInput = response => {
 
         <fieldset name="type" form="edit-form">
             <label for="type">Type: </label>
-            <select name="type" id="type" value=${response.type}>
-                <option>Event</option>
-                <option>Press Release</option>
-                <option>Funding Available</option>
-                <option>New Data</option>
-                <option>New Report</option>
-                <option>Announcement</option>
-                <option>Business Opportunity</option>
-                <option>New Webmap</option>
-                <option>Public Meeting</option>
+            <select name="type" id="type">
+                <option value="Event">Event</option>
+                <option value="PressRelease">Press Release</option>
+                <option value="FundingAvailable">Funding Available</option>
+                <option value="NewData">New Data</option>
+                <option value="NewReport">New Report</option>
+                <option value="Announcement">Announcement</option>
+                <option value="BusinessOpportunity">Business Opportunity</option>
+                <option value="NewWebmap">New Webmap</option>
+                <option value="PublicMeeting">Public Meeting</option>
             </select>
         </fieldset>
 
@@ -320,6 +321,11 @@ const createEditFormAndHandleUserInput = response => {
             <button name="delete" class="toggle-button delete-post-button" id="delete-post">Delete Post</button>
         </div>
     `
+
+    // set the Type field selected value to response.type after the field is generated
+    const formattedType = response.type.split(' ').join('')
+    const setType = document.querySelector(`#type option[value=${formattedType}]`)
+    setType.selected = true
 
     const editImg = document.querySelector('#img-bool-wrapper')
     const updatePostForm = document.querySelector('#edit-form')
