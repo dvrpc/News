@@ -62,7 +62,7 @@ OUTPUT:
         <img id="detail-view-img" src="">
         <h2 id="detail-view-title"></h2>
         <p></p>
-        <a id="detail-view-link" href="">Read More</a>
+        <a id="detail-view-link" href="">Learn More</a>
     </div>     
 */ 
 const createDetailView = (post, typeImages, updatesBox) => {
@@ -94,7 +94,7 @@ const createDetailView = (post, typeImages, updatesBox) => {
     imgType.src = typeImages[post.type]
     imgType.alt = `${post.type} post`
     detailViewParagraph.textContent = post.blurb
-    detailViewLink.textContent = 'Read More'
+    detailViewLink.textContent = 'Learn More'
     detailViewLink.href = post.link
     detailViewLink.rel = 'external'
 

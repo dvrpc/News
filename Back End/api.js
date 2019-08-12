@@ -23,8 +23,8 @@ api.post('/addPost', (req, res, next) => {
 // get (up to) the 18 most recent posts from the db
 api.get('/getTop18', (req, res, next) => {
     BlogPost.findAll({
-        limit: 18,
-        order: [['updatedAt', 'DESC']]
+        limit: 16,
+        order: [['createdAt', 'DESC']]
     })
     .then(posts => res.send(posts))
     .catch(next)
