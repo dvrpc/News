@@ -16,22 +16,21 @@ const modalSubheader = document.querySelector('#modal-subheader')
 Quill.prototype.getHTML = function() {
     return this.container.querySelector('.ql-editor').innerHTML
 }
-// do the same for loading in HTML from API response
-Quill.prototype.setHTML = function(html) {
-    this.container.querySelector('.ql-editor').insertAdjacentHTML('afterbegin', html)
-}
 
-// initialize the quill editor jawn
-const quill = new Quill('#editor', {
-    modules: {
-        toolbar: [
-            [{header: [1, 2, false] }],
-            ['bold', 'italic', 'underline', 'link']
-        ]
-    },
-    placeholder: 'Enter text hurrrr',
-    theme: 'snow'
-})
+// function to initialize the quill editor jawn (need one for submit and one for edit)
+const createQuill = el => {
+    return new Quill(el, {
+        modules: {
+            toolbar: [
+                [{header: [1, 2, false] }],
+                ['bold', 'italic', 'underline', 'link']
+            ]
+        },
+        placeholder: 'Enter text hurrrr',
+        theme: 'snow'
+    })
+}
+const quill = createQuill('#editor')
 
 
 
@@ -240,8 +239,9 @@ const formatInputs = e => {
                 console.log('suh dude')
         }
     }
-
+    console.log('does quill 2 exist here ', quill2)
     // extract HTML from Quill form using custom .getHTML() prototype method
+    // @TODO: update this using the Quill.find() method to check if quill2 exists. If it does, quill2.getHTML() otherwise quill.getHTML()
     postData.blurb = quill.getHTML()
 
     return postData
@@ -250,7 +250,8 @@ const formatInputs = e => {
 // Create a new Post
 newPostForm.onsubmit = e => {
     const data = formatInputs(e)
-    postData(data, 'addPost', 'POST')
+    // @TODO put this back in
+    //postData(data, 'addPost', 'POST')
 }
 
 // helper function to handle user choice on img edits
@@ -335,8 +336,8 @@ const createEditFormAndHandleUserInput = response => {
 
         <fieldset name="blurb" form="news-form">
             <label for="blurb">Blurb: </label>
-            <div id="editor-wrapper">
-                <div id="editor"></div>
+            <div id="editor-wrapper-2">
+                <div id="editor-2"></div>
             </div>
         </fieldset>
 
@@ -351,8 +352,9 @@ const createEditFormAndHandleUserInput = response => {
     const setType = document.querySelector(`#type option[value=${formattedType}]`)
     setType.selected = true
 
-    // populate Quill text editor with HTML response
-    quill.setHTML(response.blurb)
+    // Create and populate Quill text editor with HTML response
+    const quill2 = createQuill('#editor-2')
+    quill2.clipboard.dangerouslyPasteHTML(response.blurb)
 
     // get a handle on interactive edit form elements
     const editImg = document.querySelector('#img-bool-wrapper')

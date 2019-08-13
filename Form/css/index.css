@@ -142,11 +142,11 @@ input:not(.options), select{
 select{
     text-align: center;
 }
-#editor-wrapper{
+#editor-wrapper, #editor-wrapper-2{
     width: 100%;
     background: #fcfcfc;
 }
-#editor{
+#editor, #editor-2{
     min-height: 150px;
 }
 /* @TODO: delete the blurb jawn once the new editor is configured */
