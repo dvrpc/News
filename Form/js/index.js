@@ -9,9 +9,21 @@ const newPostForm = document.querySelector('#new-form')
 const editPostForm = document.querySelector('#edit-form-search')
 const backButton = document.querySelector('#reset-form-view-button')
 const close = document.querySelector('#close-modal')
-const modal = document.querySelector('#modal')
 const optionsForm = document.querySelector('#options-form')
 const modalSubheader = document.querySelector('#modal-subheader')
+const quillEditor = document.getElementById('editor')
+
+// initialize the qill editor jawn
+const quill = new Quill('#editor', {
+    modules: {
+        toolbar: [
+            [{header: [1, 2, false] }],
+            ['bold', 'italic', 'underline', 'link']
+        ]
+    },
+    placeholder: 'Enter text hurrrr',
+    theme: 'snow'
+})
 
 
 // reveal the forms on back button click
@@ -271,6 +283,7 @@ const handleImgEdit = e => {
 }
 
 // helper function to handle user input in the case of multiple found posts
+// @TODO: add the quill jawn here once it's set up on the create form comp
 const createEditFormAndHandleUserInput = response => {
     let keepOldImg;
 
