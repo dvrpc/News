@@ -1,8 +1,5 @@
-/****** Imports ******/
+/****** Imports and Necessary DOM Elements ******/
 import { ariaHideModal, ariaShowModal } from './modals.js'
-
-/****** Basic Page Functionality ******/
-// Get a handle on the necessary elements
 const newPostToggle = document.querySelector('.new-post-button')
 const editPostToggle = document.querySelector('.edit-post-button')
 const newPostForm = document.querySelector('#new-form')
@@ -11,9 +8,20 @@ const backButton = document.querySelector('#reset-form-view-button')
 const close = document.querySelector('#close-modal')
 const optionsForm = document.querySelector('#options-form')
 const modalSubheader = document.querySelector('#modal-subheader')
-const quillEditor = document.getElementById('editor')
 
-// initialize the qill editor jawn
+
+
+/****** Configure Quill Rich Text Editor ******/
+// build a custom method to extract innerHTML from the editor b/c quill stores content in deltas (weird JSON object) and it's hard to consume
+Quill.prototype.getHTML = function() {
+    return this.container.querySelector('.ql-editor').innerHTML
+}
+// do the same for loading in HTML from API response
+Quill.prototype.setHTML = function(html) {
+    this.container.querySelector('.ql-editor').insertAdjacentHTML('afterbegin', html)
+}
+
+// initialize the quill editor jawn
 const quill = new Quill('#editor', {
     modules: {
         toolbar: [
@@ -26,6 +34,8 @@ const quill = new Quill('#editor', {
 })
 
 
+
+/****** General Page Functionality ******/
 // reveal the forms on back button click
 const showForm = (buttons, form) => {
     buttons.forEach(button => button.style.display = 'none')
@@ -223,9 +233,6 @@ const formatInputs = e => {
             case 'img':
                 postData.img = safeValue
                 break
-            case 'blurb':
-                postData.blurb = safeValue
-                break
             case 'type':
                 postData.type = safeValue
                 break
@@ -233,6 +240,9 @@ const formatInputs = e => {
                 console.log('suh dude')
         }
     }
+
+    // extract HTML from Quill form using custom .getHTML() prototype method
+    postData.blurb = quill.getHTML()
 
     return postData
 }
@@ -283,7 +293,6 @@ const handleImgEdit = e => {
 }
 
 // helper function to handle user input in the case of multiple found posts
-// @TODO: add the quill jawn here once it's set up on the create form comp
 const createEditFormAndHandleUserInput = response => {
     let keepOldImg;
 
@@ -324,9 +333,11 @@ const createEditFormAndHandleUserInput = response => {
             </div>
         </fieldset>
 
-        <fieldset name="blurb" form="edit-form">
+        <fieldset name="blurb" form="news-form">
             <label for="blurb">Blurb: </label>
-            <textarea required name="blurb" id="blurb">${response.blurb}</textarea>
+            <div id="editor-wrapper">
+                <div id="editor"></div>
+            </div>
         </fieldset>
 
         <div id="edit-form-buttons">
@@ -340,6 +351,10 @@ const createEditFormAndHandleUserInput = response => {
     const setType = document.querySelector(`#type option[value=${formattedType}]`)
     setType.selected = true
 
+    // populate Quill text editor with HTML response
+    quill.setHTML(response.blurb)
+
+    // get a handle on interactive edit form elements
     const editImg = document.querySelector('#img-bool-wrapper')
     const updatePostForm = document.querySelector('#edit-form')
     const deleteButton = document.querySelector('#delete-post')
