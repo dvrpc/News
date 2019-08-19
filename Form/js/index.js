@@ -322,6 +322,7 @@ const createEditFormAndHandleUserInput = response => {
                 <option value="BusinessOpportunity">Business Opportunity</option>
                 <option value="NewWebmap">New Webmap</option>
                 <option value="PublicMeeting">Public Meeting</option>
+                <option value="PublicComment">Public Comment</option>
             </select>
         </fieldset>
 

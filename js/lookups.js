@@ -8,7 +8,8 @@ const typeImages = {
     'Announcement': './img/types/Announcement.png',
     'Business Opportunity': './img/types/BusinessOpportunity.png',
     'New Webmap': './img/types/NewWebmap.png',
-    'Public Meeting': './img/types/PublicMeeting.png'
+    'Public Meeting': './img/types/PublicMeeting.png',
+    'Public Comment': './img/types/PublicComment.png'
 }
 
 export { typeImages }
