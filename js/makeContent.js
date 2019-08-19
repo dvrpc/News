@@ -74,8 +74,8 @@ const createDetailView = (post, typeImages, updatesBox) => {
     const detailViewTitle = document.createElement('h2')
     const imgContainer = document.createElement('div')
     const imgType = document.createElement('img')
-    const detailViewParagraph = document.createElement('p') // eventually this will call a function that loops thru the blurb field and outputs the correct # of <p> tags
     const detailViewLink = document.createElement('a')
+    const detailViewParagraphWrapper = document.createElement('div')
 
     // add classes and ids
     detailViewContainer.id = 'detail-view-container'
@@ -93,7 +93,7 @@ const createDetailView = (post, typeImages, updatesBox) => {
     imgContainer.style.background = `url('${post.img}') center no-repeat`
     imgType.src = typeImages[post.type]
     imgType.alt = `${post.type} post`
-    detailViewParagraph.textContent = post.blurb
+    detailViewParagraphWrapper.insertAdjacentHTML('afterbegin', post.blurb)
     detailViewLink.textContent = 'Learn More'
     detailViewLink.href = post.link
     detailViewLink.rel = 'external'
@@ -103,7 +103,7 @@ const createDetailView = (post, typeImages, updatesBox) => {
     fragment.appendChild(detailViewTitle)
     imgContainer.appendChild(imgType)
     fragment.appendChild(imgContainer)
-    fragment.appendChild(detailViewParagraph)
+    fragment.appendChild(detailViewParagraphWrapper)
     fragment.appendChild(detailViewLink)
     detailViewContainer.appendChild(fragment)
     updatesBox.appendChild(detailViewContainer)

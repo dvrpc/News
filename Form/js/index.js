@@ -26,7 +26,7 @@ const createQuill = el => {
                 ['bold', 'italic', 'underline', 'link']
             ]
         },
-        placeholder: 'Enter text hurrrr',
+        placeholder: 'Enter text right hurrrr',
         theme: 'snow'
     })
 }
