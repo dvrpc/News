@@ -239,19 +239,23 @@ const formatInputs = e => {
                 console.log('suh dude')
         }
     }
-    console.log('does quill 2 exist here ', quill2)
-    // extract HTML from Quill form using custom .getHTML() prototype method
-    // @TODO: update this using the Quill.find() method to check if quill2 exists. If it does, quill2.getHTML() otherwise quill.getHTML()
-    postData.blurb = quill.getHTML()
-
+    // extract HTML from Quill form using custom .getHTML() prototype method. Check if user is submitting a new post or an edit
+    const editQuillContainer = document.getElementById('editor-2')
+    
+    if(editQuillContainer) {
+        const editQuill = Quill.find(editQuillContainer)        
+        postData.blurb = editQuill.getHTML()
+    }else {
+        postData.blurb = quill.getHTML()
+    }
+    
     return postData
 }
 
 // Create a new Post
 newPostForm.onsubmit = e => {
     const data = formatInputs(e)
-    // @TODO put this back in
-    //postData(data, 'addPost', 'POST')
+    postData(data, 'addPost', 'POST')
 }
 
 // helper function to handle user choice on img edits
