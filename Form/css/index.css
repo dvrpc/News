@@ -79,6 +79,7 @@ li{
     align-items: center;
     justify-content: center;
     background: #ecebe4;
+    overflow-y: auto;
 }
 #reset-form-view-button{
     display: none;

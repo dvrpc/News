@@ -233,6 +233,7 @@ const formatInputs = e => {
                 postData.img = safeValue
                 break
             case 'type':
+                console.log('post data type value ', safeValue)
                 postData.type = safeValue
                 break
             default:
@@ -314,15 +315,15 @@ const createEditFormAndHandleUserInput = response => {
             <label for="type">Type: </label>
             <select name="type" id="type">
                 <option value="Event">Event</option>
-                <option value="PressRelease">Press Release</option>
-                <option value="FundingAvailable">Funding Available</option>
-                <option value="NewData">New Data</option>
-                <option value="NewReport">New Report</option>
-                <option value="Announcement">Announcement</option>
-                <option value="BusinessOpportunity">Business Opportunity</option>
-                <option value="NewWebmap">New Webmap</option>
-                <option value="PublicMeeting">Public Meeting</option>
-                <option value="PublicComment">Public Comment</option>
+                <option value="Press Release">Press Release</option>
+                <option value="Funding Available">Funding Available</option>
+                <option value="New Data">New Data</option>
+                <option value="New Report">New Report</option>
+                <option value="Update">Update</option>
+                <option value="Business Opportunity">Business Opportunity</option>
+                <option value="New Webmap">New Webmap</option>
+                <option value="Public Meeting">Public Meeting</option>
+                <option value="Public Comment">Public Comment</option>
             </select>
         </fieldset>
 
@@ -353,8 +354,7 @@ const createEditFormAndHandleUserInput = response => {
     `
 
     // set the Type field selected value to response.type after the field is generated
-    const formattedType = response.type.split(' ').join('')
-    const setType = document.querySelector(`#type option[value=${formattedType}]`)
+    const setType = document.querySelector(`#type option[value="${response.type}"]`)
     setType.selected = true
 
     // Create and populate Quill text editor with HTML response

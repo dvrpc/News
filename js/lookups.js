@@ -5,7 +5,7 @@ const typeImages = {
     'Funding Available': './img/types/FundingAvailable.png',
     'New Data': './img/types/NewData.png',
     'New Report': './img/types/NewReport.png',
-    'Announcement': './img/types/Announcement.png',
+    'Update': './img/types/Update.png',
     'Business Opportunity': './img/types/BusinessOpportunity.png',
     'New Webmap': './img/types/NewWebmap.png',
     'Public Meeting': './img/types/PublicMeeting.png',
