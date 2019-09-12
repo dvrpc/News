@@ -97,6 +97,7 @@ const createDetailView = (post, typeImages, updatesBox) => {
     detailViewLink.textContent = 'Learn More'
     detailViewLink.href = post.link
     detailViewLink.rel = 'external'
+    detailViewLink.target = '_blank'
 
     // append children
     fragment.appendChild(detailViewLeftArrow)
