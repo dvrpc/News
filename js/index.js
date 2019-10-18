@@ -73,7 +73,10 @@ const createNewPage = posts => {
         updatesItem.onmouseleave = () => {
             updatesItem.style.cursor = ''
             title.style.color = ''
-            img.style.background = `url('${post.img}') center no-repeat`
+            img.style.backgroundImage = `url('${post.img}')`
+            img.style.backgroundSize = 'cover'
+            img.style.backgroundPosition = 'center center'
+            img.style.backgroundRepeat = 'no-repeat'
         }
     })
 }
