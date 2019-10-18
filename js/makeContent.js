@@ -32,7 +32,10 @@ const createPost = (post, typeImages, updatesBox) => {
     title.classList.add('updates-item-title')
 
     // add content
-    imgContainer.style.background = `url('${post.img}') center no-repeat`
+    imgContainer.style.backgroundImage = `url('${post.img}')`
+    imgContainer.style.backgroundSize = 'cover'
+    imgContainer.style.backgroundPosition = 'center center'
+    imgContainer.style.backgroundRepeat = 'no-repeat'
     imgType.src = typeImages[post.type]
     imgType.alt = `${post.type} post`
     title.textContent = post.title
@@ -90,7 +93,11 @@ const createDetailView = (post, typeImages, updatesBox) => {
     // add the content
     detailViewTitle.textContent = post.title
     detailViewLeftArrow.textContent = '\u2039'
-    imgContainer.style.background = `url('${post.img}') center no-repeat`
+    imgContainer.style.backgroundImage = `url('${post.img}')`
+    imgContainer.style.backgroundSize = 'cover'
+    imgContainer.style.backgroundPosition = 'center center'
+    imgContainer.style.backgroundRepeat = 'no-repeat'
+
     imgType.src = typeImages[post.type]
     imgType.alt = `${post.type} post`
     detailViewParagraphWrapper.insertAdjacentHTML('afterbegin', post.blurb)
