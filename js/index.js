@@ -34,6 +34,7 @@ const getPosts = async () => {
 const createNewPage = posts => {
 
     // get the data for the page
+    // @TODO: add the date created field to the title
     pageContents = makePage(posts, currentPage, postsPerPage)
 
     // create the page & add detail view functionality
@@ -59,24 +60,6 @@ const createNewPage = posts => {
                 toggleContentVisibility('', updatesBox)
                 toggleNavArrows(currentPage, numberOfPages, nextPageButton, previousPageButton)
             }
-        }
-
-        // get a handle on the img and title so that hover effects can jawn em up
-        let [img, title] = [...updatesItem.children]        
-
-        // change background and link color on hover, remove them on mouse leave
-        updatesItem.onmouseenter = () => {
-            updatesItem.style.cursor = 'pointer'
-            title.style.color = '#03688d'
-            img.style.background = '#03688D'
-        }
-        updatesItem.onmouseleave = () => {
-            updatesItem.style.cursor = ''
-            title.style.color = ''
-            img.style.backgroundImage = `url('${post.img}')`
-            img.style.backgroundSize = 'cover'
-            img.style.backgroundPosition = 'center center'
-            img.style.backgroundRepeat = 'no-repeat'
         }
     })
 }

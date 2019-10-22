@@ -1,7 +1,7 @@
 /****** Function to Create Updates Items ******/
 /*
 INPUT:
-    - Post Img  (background for updates-item-img-container)
+    - Post Img  (background for updates-item-img)
     - Post Type (event, press release, etc., overlay for updates-item-img-type)
     - Post Title (button textContent)
     - Post Link (posted location of resource)
@@ -10,6 +10,7 @@ INPUT:
 OUTPUT:
     <div class="updates-item">
         <div class="updates-item-img-container">
+            <div class="updates-item-img"></div>
             <img class="updates-item-img-type" src="" />
         </div>
 
@@ -22,25 +23,27 @@ const createPost = (post, typeImages, updatesBox) => {
     const fragment = document.createDocumentFragment()
     const updatesItem = document.createElement('div')
     const imgContainer = document.createElement('div')
+    const img = document.createElement('div')
     const imgType = document.createElement('img')
     const title = document.createElement('button')
 
     // add their classes
-    updatesItem.classList.add('updates-item')
     imgContainer.classList.add('updates-item-img-container')
+    updatesItem.classList.add('updates-item')
+    img.classList.add('updates-item-img')
     imgType.classList.add('updates-item-img-type')
     title.classList.add('updates-item-title')
 
     // add content
-    imgContainer.style.backgroundImage = `url('${post.img}')`
-    imgContainer.style.backgroundSize = 'cover'
-    imgContainer.style.backgroundPosition = 'center center'
-    imgContainer.style.backgroundRepeat = 'no-repeat'
+    img.style.backgroundImage = `url('${post.img}')`
     imgType.src = typeImages[post.type]
     imgType.alt = `${post.type} post`
+
+    // @TODO: add date created here. `${post.Created} | ${post.title}`
     title.textContent = post.title
 
     // append to jawns
+    imgContainer.appendChild(img)
     imgContainer.appendChild(imgType)
     fragment.appendChild(imgContainer)
     fragment.appendChild(title)
@@ -75,7 +78,7 @@ const createDetailView = (post, typeImages, updatesBox) => {
     const detailViewContainer = document.createElement('div')
     const detailViewLeftArrow = document.createElement('button')
     const detailViewTitle = document.createElement('h2')
-    const imgContainer = document.createElement('div')
+    const img = document.createElement('div')
     const imgType = document.createElement('img')
     const detailViewLink = document.createElement('a')
     const detailViewParagraphWrapper = document.createElement('div')
@@ -83,20 +86,19 @@ const createDetailView = (post, typeImages, updatesBox) => {
     // add classes and ids
     detailViewContainer.id = 'detail-view-container'
     detailViewLeftArrow.id = 'detail-view-left'
-    detailViewLeftArrow.classList.add('nav-arrow')
     detailViewTitle.id = 'detail-view-title'
-    imgContainer.classList.add('updates-item-img-container')
-    imgContainer.id = 'detail-view-img'
+    img.id = 'detail-view-img'
+    detailViewLink.id = "detail-view-link"
+    img.classList.add('updates-item-img')
+    img.classList.add('detail-view-img')
     imgType.classList.add('updates-item-img-type')
-    detailViewLink.id="detail-view-link"
+    imgType.classList.add('detail-view-img-type')
+    detailViewLeftArrow.classList.add('nav-arrow')
 
     // add the content
     detailViewTitle.textContent = post.title
     detailViewLeftArrow.textContent = '\u2039'
-    imgContainer.style.backgroundImage = `url('${post.img}')`
-    imgContainer.style.backgroundSize = 'cover'
-    imgContainer.style.backgroundPosition = 'center center'
-    imgContainer.style.backgroundRepeat = 'no-repeat'
+    img.style.backgroundImage = `url('${post.img}')`
 
     imgType.src = typeImages[post.type]
     imgType.alt = `${post.type} post`
@@ -109,8 +111,8 @@ const createDetailView = (post, typeImages, updatesBox) => {
     // append children
     fragment.appendChild(detailViewLeftArrow)
     fragment.appendChild(detailViewTitle)
-    imgContainer.appendChild(imgType)
-    fragment.appendChild(imgContainer)
+    img.appendChild(imgType)
+    fragment.appendChild(img)
     fragment.appendChild(detailViewParagraphWrapper)
     fragment.appendChild(detailViewLink)
     detailViewContainer.appendChild(fragment)
