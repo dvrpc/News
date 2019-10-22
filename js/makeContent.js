@@ -1,3 +1,15 @@
+/****** Helper function to format dates ******/
+const formatDate = createdAt => {
+    const dateObj = new Date(createdAt)
+    const month = dateObj.getMonth() + 1
+    const day = dateObj.getDate()
+    const year = dateObj.getFullYear().toString().substring(2)
+    const datePosted = `${month}/${day}/${year}`
+
+    return datePosted
+}
+
+
 /****** Function to Create Updates Items ******/
 /*
 INPUT:
@@ -19,6 +31,9 @@ OUTPUT:
 */
 const createPost = (post, typeImages, updatesBox) => {
 
+    // extract date posted and format it as mm/dd/yy
+    const datePosted = formatDate(post.createdAt)
+    
     // create the necessary elements
     const fragment = document.createDocumentFragment()
     const updatesItem = document.createElement('div')
@@ -38,9 +53,7 @@ const createPost = (post, typeImages, updatesBox) => {
     img.style.backgroundImage = `url('${post.img}')`
     imgType.src = typeImages[post.type]
     imgType.alt = `${post.type} post`
-
-    // @TODO: add date created here. `${post.Created} | ${post.title}`
-    title.textContent = post.title
+    title.textContent = `${datePosted} | ${post.title}`
 
     // append to jawns
     imgContainer.appendChild(img)
@@ -73,6 +86,9 @@ OUTPUT:
 */ 
 const createDetailView = (post, typeImages, updatesBox) => {
 
+    // extract date posted and format it as mm/dd/yy
+    const datePosted = formatDate(post.createdAt)
+
     // create the necessary elements
     const fragment = document.createDocumentFragment()
     const detailViewContainer = document.createElement('div')
@@ -96,10 +112,9 @@ const createDetailView = (post, typeImages, updatesBox) => {
     detailViewLeftArrow.classList.add('nav-arrow')
 
     // add the content
-    detailViewTitle.textContent = post.title
+    detailViewTitle.textContent = `${datePosted} | ${post.title}`
     detailViewLeftArrow.textContent = '\u2039'
     img.style.backgroundImage = `url('${post.img}')`
-
     imgType.src = typeImages[post.type]
     imgType.alt = `${post.type} post`
     detailViewParagraphWrapper.insertAdjacentHTML('afterbegin', post.blurb)

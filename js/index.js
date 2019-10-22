@@ -34,7 +34,6 @@ const getPosts = async () => {
 const createNewPage = posts => {
 
     // get the data for the page
-    // @TODO: add the date created field to the title
     pageContents = makePage(posts, currentPage, postsPerPage)
 
     // create the page & add detail view functionality
@@ -60,6 +59,8 @@ const createNewPage = posts => {
                 toggleContentVisibility('', updatesBox)
                 toggleNavArrows(currentPage, numberOfPages, nextPageButton, previousPageButton)
             }
+
+            // update URL with post id (either as a hash or as ?page=${id})
         }
     })
 }
@@ -141,4 +142,9 @@ const noPosts = () => {
 }
 
 // on load, create the first page (with db, getPageData will be refactored to return a data PROMISE, which will replace all instances of dummyData etc., and then createNewPage() will be called here w/that object instead)
+/* @todo: check for presence of hash and either load the specific page OR call getPageData
+    const hash = location.hash
+    hash ? getSpecificPage(hash) : getPageData()
+*/
+
 getPageData()
