@@ -115,6 +115,7 @@ const createDetailView = (post, typeImages, updatesBox) => {
     detailViewTitle.textContent = `${datePosted} | ${post.title}`
     detailViewLeftArrow.textContent = '\u2039'
     img.style.backgroundImage = `url('${post.img}')`
+
     imgType.src = typeImages[post.type]
     imgType.alt = `${post.type} post`
     detailViewParagraphWrapper.insertAdjacentHTML('afterbegin', post.blurb)

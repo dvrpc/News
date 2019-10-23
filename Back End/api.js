@@ -37,7 +37,7 @@ api.get('/getAll', (req, res, next) => {
     .catch(next)
 })
 
-// find the post to edit
+// find the post(s) to edit
 api.get('/getPost/:title', (req, res, next) => {
     BlogPost.findAll({
         where: {
@@ -45,6 +45,17 @@ api.get('/getPost/:title', (req, res, next) => {
         } 
     })
     .then(post => post.length ? res.send(post) : res.status(404).send('Post not found'))
+    .catch(next)
+})
+
+// find a post by id for link sharing
+api.get('/getPublicPost/:id', (req, res, next) => {
+    BlogPost.findOne({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(post => post ? res.send(post) : res.status(404).send('Post not found'))
     .catch(next)
 })
 
@@ -63,7 +74,9 @@ api.put('/updatePost/:id', (req, res, next) => {
 // delete a selected post
 api.delete('/deletePost/:id', (req, res, next) => {
     BlogPost.destroy({
-        where: {id: req.params.id}
+        where: {
+            id: req.params.id
+        }
     })
     .then(destroyed => destroyed ? res.status(204).send() : res.status(404).send())
     .catch(next)

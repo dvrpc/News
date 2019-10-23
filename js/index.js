@@ -17,6 +17,7 @@ let pageContents;
 let selectedCategory = 'View All'
 let length;
 
+/****** Get the Data ******/
 const getPosts = async () => {
     try{
         const stream = await fetch('http://10.1.1.194:3001/api/getTop18')
@@ -26,6 +27,24 @@ const getPosts = async () => {
     catch(error) {
         console.error(error)
     }
+}
+const getSpecificPost = async id => {
+    try {
+        const stream = await fetch(`http://10.1.1.194:3001/api/getPublicPost/${id}`)
+        const data = await stream.json()
+        return data
+    }
+    catch(error) {
+        console.error(error)
+    }
+}
+
+/****** Helper function to reset url *******/
+const resetURI = () => {
+    const origin = location.origin
+    const pathname = location.pathname
+    const defaultURI = origin + pathname
+    history.pushState({home: defaultURI}, 'Newsroom', defaultURI)
 }
 
 
@@ -60,11 +79,7 @@ const createNewPage = posts => {
                 toggleNavArrows(currentPage, numberOfPages, nextPageButton, previousPageButton)
 
                 // remove post identifier from URI
-                const origin = location.origin
-                const pathname = location.pathname
-                const defaultURI = origin + pathname
-                history.pushState({home: defaultURI}, 'Newsroom', defaultURI)
-
+                resetURI()
             }
             
             // update uri for link sharing (this is not intended to be a full routing solution)
@@ -152,25 +167,47 @@ const noPosts = () => {
     updatesBox.appendChild(noResults)
 }
 
-// load a specific post from the url
-const getSpecificPage = id => {
-    console.log('id is ', id)
+const getLinkedPost = id => {
+    id = parseInt(id)
+    const data = getSpecificPost(id)
 
-    // filter existing posts from the jawn
-    // am definitely going to need to create a new endpoint probably it's the right call ugh
+    // hide the nav arrows
+    nextPageButton.style.display = 'none'
+    previousPageButton.style.display = 'none'
+
+    data.then(post => {
+        const detailViewLeftArrow = createDetailView(post, typeImages, updatesBox)
+    
+        // go to default homepage (update url, remove detail box and get default data)
+        detailViewLeftArrow.onclick = () => {
+            resetURI()
+            toggleContentVisibility('', updatesBox)
+            getPageData()
+        }
+    
+        // // handle 'no results' case i.e. a broken link or something like that
+        if(!post){
+            numberOfPages = 1
+            toggleNavArrows(currentPage, numberOfPages, nextPageButton, previousPageButton)
+            noPosts()
+            return
+        }
+    })
 
 }
 
 // on load, create the first page (with db, getPageData will be refactored to return a data PROMISE, which will replace all instances of dummyData etc., and then createNewPage() will be called here w/that object instead)
-/* @todo: check for presence of hash and either load the specific page OR call getPageData
-const hash = location.hash
-hash ? getSpecificPage(hash) : getPageData()
-^ this might need to exist in the scope of window.onload 
-*/
-window.onload = () => {
-    const postCheck = location.href.split('?post=')
-    console.log('postCheck ', postCheck)
-    postCheck[1] ? getSpecificPage(postCheck[1]) : getPageData()
-}
+/* 
+    options:
+        1) create a new endpoint to get a post by id and hit that if postCheck below validates
+            pros: no need to pull in all 18 posts just to link to one
+            cons: need to pull in all 18 posts when navigating back out (already doing this)
 
-//getPageData()
+        2) pass a bool to getPageData and treat an id as a filter
+            pros: easier lift, no new endpoint, basically it's a lazy solution
+            cons: pull all 18 posts just to display one
+*/
+
+// load homepage or a specific post depending on URL (again: not a routing solution just a way to share links)
+const postCheck = location.href.split('?post=')[1]
+postCheck ? getLinkedPost(postCheck) : getPageData()
