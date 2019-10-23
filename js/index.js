@@ -167,6 +167,7 @@ const noPosts = () => {
     updatesBox.appendChild(noResults)
 }
 
+// fake routing by giving people the ability to share links
 const getLinkedPost = id => {
     id = parseInt(id)
     const data = getSpecificPost(id)
@@ -176,6 +177,14 @@ const getLinkedPost = id => {
     previousPageButton.style.display = 'none'
 
     data.then(post => {
+        // // handle 'no results' case i.e. a broken link or something like that
+        if(!post){
+            numberOfPages = 1
+            toggleNavArrows(currentPage, numberOfPages, nextPageButton, previousPageButton)
+            noPosts()
+            return
+        }
+
         const detailViewLeftArrow = createDetailView(post, typeImages, updatesBox)
     
         // go to default homepage (update url, remove detail box and get default data)
@@ -184,29 +193,10 @@ const getLinkedPost = id => {
             toggleContentVisibility('', updatesBox)
             getPageData()
         }
-    
-        // // handle 'no results' case i.e. a broken link or something like that
-        if(!post){
-            numberOfPages = 1
-            toggleNavArrows(currentPage, numberOfPages, nextPageButton, previousPageButton)
-            noPosts()
-            return
-        }
+
     })
 
 }
-
-// on load, create the first page (with db, getPageData will be refactored to return a data PROMISE, which will replace all instances of dummyData etc., and then createNewPage() will be called here w/that object instead)
-/* 
-    options:
-        1) create a new endpoint to get a post by id and hit that if postCheck below validates
-            pros: no need to pull in all 18 posts just to link to one
-            cons: need to pull in all 18 posts when navigating back out (already doing this)
-
-        2) pass a bool to getPageData and treat an id as a filter
-            pros: easier lift, no new endpoint, basically it's a lazy solution
-            cons: pull all 18 posts just to display one
-*/
 
 // load homepage or a specific post depending on URL (again: not a routing solution just a way to share links)
 const postCheck = location.href.split('?post=')[1]
