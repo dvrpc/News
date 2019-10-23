@@ -58,9 +58,20 @@ const createNewPage = posts => {
             detailViewLeftArrow.onclick = () => {
                 toggleContentVisibility('', updatesBox)
                 toggleNavArrows(currentPage, numberOfPages, nextPageButton, previousPageButton)
-            }
 
-            // update URL with post id (either as a hash or as ?page=${id})
+                // remove post identifier from URI
+                const origin = location.origin
+                const pathname = location.pathname
+                const defaultURI = origin + pathname
+                history.pushState({home: defaultURI}, 'Newsroom', defaultURI)
+
+            }
+            
+            // update uri for link sharing (this is not intended to be a full routing solution)
+            const id = post.id
+            const baseURI = location.href
+            const pageURI = `${baseURI}?post=${id}`
+            history.pushState({post: id}, `Newsroom post ${id}`,pageURI)
         }
     })
 }
@@ -141,10 +152,25 @@ const noPosts = () => {
     updatesBox.appendChild(noResults)
 }
 
+// load a specific post from the url
+const getSpecificPage = id => {
+    console.log('id is ', id)
+
+    // filter existing posts from the jawn
+    // am definitely going to need to create a new endpoint probably it's the right call ugh
+
+}
+
 // on load, create the first page (with db, getPageData will be refactored to return a data PROMISE, which will replace all instances of dummyData etc., and then createNewPage() will be called here w/that object instead)
 /* @todo: check for presence of hash and either load the specific page OR call getPageData
-    const hash = location.hash
-    hash ? getSpecificPage(hash) : getPageData()
+const hash = location.hash
+hash ? getSpecificPage(hash) : getPageData()
+^ this might need to exist in the scope of window.onload 
 */
+window.onload = () => {
+    const postCheck = location.href.split('?post=')
+    console.log('postCheck ', postCheck)
+    postCheck[1] ? getSpecificPage(postCheck[1]) : getPageData()
+}
 
-getPageData()
+//getPageData()
