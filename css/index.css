@@ -120,9 +120,17 @@ body{
 #detail-view-img:hover{
     cursor: auto;
 }
+#detail-view-copy-btn{
+    float: left;
+    border: none;
+    background: none;
+    text-decoration: underline;
+}
 #detail-view-link{
-    font-size: 1rem;
     float: right;
+}
+#detail-view-link, #detail-view-copy-btn{
+    font-size: 1rem;
     color: #03688D;
     font-weight: 800;
 }

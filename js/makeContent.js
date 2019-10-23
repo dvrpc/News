@@ -1,4 +1,4 @@
-/****** Helper function to format dates ******/
+/****** Helper functions ******/
 const formatDate = createdAt => {
     const dateObj = new Date(createdAt)
     const month = dateObj.getMonth() + 1
@@ -8,6 +8,29 @@ const formatDate = createdAt => {
 
     return datePosted
 }
+
+const addToClipboard = () => {
+    const baseURI = location.href
+    const hiddenJawn = document.createElement('input')
+    const container = document.getElementById('detail-view-container')
+    
+    hiddenJawn.style.display = 'none'
+    hiddenJawn.type = 'text'
+    hiddenJawn.value = baseURI
+    
+    container.appendChild(hiddenJawn)
+    
+    console.log('container ', container)
+    console.log('hidden jawn ', hiddenJawn.value)
+    
+    hiddenJawn.select()
+    hiddenJawn.setSelectionRange(0, 99999)
+    document.execCommand('copy')
+
+    // remove element
+    hiddenJawn.remove()
+}
+
 
 
 /****** Function to Create Updates Items ******/
@@ -81,6 +104,7 @@ OUTPUT:
         <img id="detail-view-img" src="">
         <h2 id="detail-view-title"></h2>
         <p></p>
+        <button id="details-view-copy-btn">copy link</button>
         <a id="detail-view-link" href="">Learn More</a>
     </div>     
 */ 
@@ -97,6 +121,7 @@ const createDetailView = (post, typeImages, updatesBox) => {
     const img = document.createElement('div')
     const imgType = document.createElement('img')
     const detailViewLink = document.createElement('a')
+    const copyLinkBtn = document.createElement('button')
     const detailViewParagraphWrapper = document.createElement('div')
 
     // add classes and ids
@@ -105,6 +130,7 @@ const createDetailView = (post, typeImages, updatesBox) => {
     detailViewTitle.id = 'detail-view-title'
     img.id = 'detail-view-img'
     detailViewLink.id = "detail-view-link"
+    copyLinkBtn.id = 'detail-view-copy-btn'
     img.classList.add('updates-item-img')
     img.classList.add('detail-view-img')
     imgType.classList.add('updates-item-img-type')
@@ -119,10 +145,14 @@ const createDetailView = (post, typeImages, updatesBox) => {
     imgType.src = typeImages[post.type]
     imgType.alt = `${post.type} post`
     detailViewParagraphWrapper.insertAdjacentHTML('afterbegin', post.blurb)
+    copyLinkBtn.textContent = 'copy link'
     detailViewLink.textContent = 'Learn More'
     detailViewLink.href = post.link
     detailViewLink.rel = 'external'
     detailViewLink.target = '_blank'
+
+    // add copy functionality
+    copyLinkBtn.onclick = () => addToClipboard()
 
     // append children
     fragment.appendChild(detailViewLeftArrow)
@@ -130,6 +160,7 @@ const createDetailView = (post, typeImages, updatesBox) => {
     img.appendChild(imgType)
     fragment.appendChild(img)
     fragment.appendChild(detailViewParagraphWrapper)
+    fragment.appendChild(copyLinkBtn)
     fragment.appendChild(detailViewLink)
     detailViewContainer.appendChild(fragment)
     updatesBox.appendChild(detailViewContainer)

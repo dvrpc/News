@@ -177,7 +177,7 @@ const getLinkedPost = id => {
     previousPageButton.style.display = 'none'
 
     data.then(post => {
-        // // handle 'no results' case i.e. a broken link or something like that
+        // handle 'no results' case i.e. a broken link or something like that
         if(!post){
             numberOfPages = 1
             toggleNavArrows(currentPage, numberOfPages, nextPageButton, previousPageButton)
@@ -193,9 +193,7 @@ const getLinkedPost = id => {
             toggleContentVisibility('', updatesBox)
             getPageData()
         }
-
     })
-
 }
 
 // load homepage or a specific post depending on URL (again: not a routing solution just a way to share links)
