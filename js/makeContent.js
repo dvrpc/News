@@ -14,20 +14,20 @@ const addToClipboard = () => {
     const hiddenJawn = document.createElement('input')
     const container = document.getElementById('detail-view-container')
     
-    hiddenJawn.style.display = 'none'
+    //display: none and visibility: hidden prevent execCommand from working so hide it w/margin
+    hiddenJawn.style.marginLeft = '-9999px'
     hiddenJawn.type = 'text'
     hiddenJawn.value = baseURI
     
+    // hidden field has to be on the DOM for execCommand do work
     container.appendChild(hiddenJawn)
     
-    console.log('container ', container)
-    console.log('hidden jawn ', hiddenJawn.value)
-    
+    // add to clipboard
     hiddenJawn.select()
     hiddenJawn.setSelectionRange(0, 99999)
     document.execCommand('copy')
 
-    // remove element
+    // remove hidden field
     hiddenJawn.remove()
 }
 

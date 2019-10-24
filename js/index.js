@@ -143,7 +143,7 @@ const filterCategories = () => {
     // get a handle on the selected category
     selectedCategory = filter.options[filter.selectedIndex].text.trim()
 
-    // clear the jawn (while(parent.firstChild) is apparently faster than parent.innerHTML = '')
+    // clear the jawn
     while(updatesBox.firstChild){
         updatesBox.removeChild(updatesBox.firstChild)
     }
