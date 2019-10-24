@@ -124,14 +124,23 @@ body{
     float: left;
     border: none;
     background: none;
-    text-decoration: underline;
+    color: #8c8c8c;
+}
+#detail-view-copy-btn img{
+    margin-right: 5px;
+}
+#link-copied-overlay{
+    position: absolute;
+    bottom: 18px;
+    background: #fff;
+    color: #8c8c8c;
 }
 #detail-view-link{
     float: right;
+    color: #03688D;
 }
 #detail-view-link, #detail-view-copy-btn{
     font-size: 1rem;
-    color: #03688D;
     font-weight: 800;
     padding: 0;
 }

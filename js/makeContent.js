@@ -12,15 +12,20 @@ const formatDate = createdAt => {
 const addToClipboard = () => {
     const baseURI = location.href
     const hiddenJawn = document.createElement('input')
+    const linkCopied = document.createElement('div')
     const container = document.getElementById('detail-view-container')
     
+    linkCopied.id = 'link-copied-overlay'
+
     //display: none and visibility: hidden prevent execCommand from working so hide it w/margin
     hiddenJawn.style.marginLeft = '-9999px'
     hiddenJawn.type = 'text'
     hiddenJawn.value = baseURI
+    linkCopied.textContent = 'link copied'
     
     // hidden field has to be on the DOM for execCommand do work
     container.appendChild(hiddenJawn)
+    container.appendChild(linkCopied)
     
     // add to clipboard
     hiddenJawn.select()
@@ -29,6 +34,11 @@ const addToClipboard = () => {
 
     // remove hidden field
     hiddenJawn.remove()
+
+    // remove the overlay after 2 seconds
+    window.setTimeout(() => {
+        linkCopied.remove()
+    }, 2000)
 }
 
 
@@ -104,7 +114,7 @@ OUTPUT:
         <img id="detail-view-img" src="">
         <h2 id="detail-view-title"></h2>
         <p></p>
-        <button id="details-view-copy-btn">copy link</button>
+        <button id="details-view-copy-btn">SHARE</button>
         <a id="detail-view-link" href="">Learn More</a>
     </div>     
 */ 
@@ -122,6 +132,7 @@ const createDetailView = (post, typeImages, updatesBox) => {
     const imgType = document.createElement('img')
     const detailViewLink = document.createElement('a')
     const copyLinkBtn = document.createElement('button')
+    const copyLinkImg = document.createElement('img')
     const detailViewParagraphWrapper = document.createElement('div')
 
     // add classes and ids
@@ -145,7 +156,8 @@ const createDetailView = (post, typeImages, updatesBox) => {
     imgType.src = typeImages[post.type]
     imgType.alt = `${post.type} post`
     detailViewParagraphWrapper.insertAdjacentHTML('afterbegin', post.blurb)
-    copyLinkBtn.textContent = 'copy link'
+    copyLinkImg.src = './img/link.png'
+    copyLinkBtn.textContent = 'SHARE'
     detailViewLink.textContent = 'Learn More'
     detailViewLink.href = post.link
     detailViewLink.rel = 'external'
@@ -155,9 +167,10 @@ const createDetailView = (post, typeImages, updatesBox) => {
     copyLinkBtn.onclick = () => addToClipboard()
 
     // append children
+    img.appendChild(imgType)
+    copyLinkBtn.insertAdjacentElement('afterbegin', copyLinkImg)
     fragment.appendChild(detailViewLeftArrow)
     fragment.appendChild(detailViewTitle)
-    img.appendChild(imgType)
     fragment.appendChild(img)
     fragment.appendChild(detailViewParagraphWrapper)
     fragment.appendChild(copyLinkBtn)
