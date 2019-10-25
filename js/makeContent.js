@@ -21,7 +21,7 @@ const addToClipboard = () => {
     hiddenJawn.style.marginLeft = '-9999px'
     hiddenJawn.type = 'text'
     hiddenJawn.value = baseURI
-    linkCopied.textContent = 'link copied'
+    linkCopied.textContent = 'LINK COPIED'
     
     // hidden field has to be on the DOM for execCommand do work
     container.appendChild(hiddenJawn)
