@@ -20,7 +20,7 @@ let length;
 /****** Get the Data ******/
 const getPosts = async () => {
     try{
-        const stream = await fetch('http://10.1.1.194:3001/api/getTop18')
+        const stream = await fetch('https://alpha.dvrpc.org/news/getTop18')
         const data = await stream.json()
         return data        
     }
@@ -30,7 +30,7 @@ const getPosts = async () => {
 }
 const getSpecificPost = async id => {
     try {
-        const stream = await fetch(`http://10.1.1.194:3001/api/getPublicPost/${id}`)
+        const stream = await fetch(`https://alpha.dvrpc.org/news/getPublicPost/${id}`)
         const data = await stream.json()
         return data
     }
