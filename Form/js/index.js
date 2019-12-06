@@ -82,14 +82,14 @@ const makePost = async (data, endpoint, method) => {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Access-Control-Allow-Origin': 'http://intranet.dvrpc.org/'
+                'Access-Control-Allow-Origin': 'https://alpha.dvrpc.org/'
             },
             body: JSON.stringify(data)
         }
     }
 
     try{
-        const stream = await fetch(`http://10.1.1.194:3001/api/${endpoint}`, options(data))
+        const stream = await fetch(`https://alpha.dvrpc.org/news/${endpoint}`, options(data))
     
         if(stream.ok){
             let customSuccess;
@@ -175,7 +175,7 @@ const findEntry = async title => {
         }
     }
     
-    const stream = await fetch(`http://10.1.1.194:3001/api/getPost/${title}`, options)
+    const stream = await fetch(`https://alpha.dvrpc.org/news/getPost/${title}`, options)
     let response;
 
     // return data or a useful error message
@@ -198,7 +198,7 @@ const deleteEntry = async id => {
         }
     }
 
-    const stream = await fetch(`http://10.1.1.194:3001/api/deletePost/${id}`, options)
+    const stream = await fetch(`https://alpha.dvrpc.org/news/deletePost/${id}`, options)
 
     if(stream.status === 204){
         alert('Succesfully deleted the post')
