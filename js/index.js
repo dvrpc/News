@@ -8,7 +8,6 @@ const updatesBox = document.getElementById('updates-box')
 const nextPageButton = document.getElementById('updates-box-nav-right')
 const previousPageButton = document.getElementById('updates-box-nav-left')
 const filter = document.getElementById('cat-filter')
-const loading = document.getElementById('updates-box-loading')
 
 // Variables for Pagination Functions
 let currentPage = 1
@@ -93,8 +92,7 @@ const createNewPage = posts => {
 }
 
 const getPageData = async filter => {
-    // show loading gif
-    loading.style.display = 'inline'
+    const loading = document.getElementById('updates-box-loading')
 
     const data = getPosts()
 

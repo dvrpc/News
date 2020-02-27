@@ -20,6 +20,9 @@ const changePage = (direction, currentPage, updatesBox) => {
         updatesBox.removeChild(updatesBox.firstChild)
     }
 
+    // add loading gif
+    updatesBox.insertAdjacentHTML('afterbegin', '<img id="updates-box-loading" src="/img/loading.gif" alt="projects loading" />')
+
     return currentPage
 }
 
