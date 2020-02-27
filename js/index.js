@@ -4,10 +4,11 @@ import { createPost, createDetailView } from './makeContent.js'
 import { toggleContentVisibility } from './toggleVisibility.js'
 
 // get a handle on the main box and next/previous buttons
-const updatesBox = document.querySelector('#updates-box')
-const nextPageButton = document.querySelector('#updates-box-nav-right')
-const previousPageButton = document.querySelector('#updates-box-nav-left')
-const filter = document.querySelector('#cat-filter')
+const updatesBox = document.getElementById('updates-box')
+const nextPageButton = document.getElementById('updates-box-nav-right')
+const previousPageButton = document.getElementById('updates-box-nav-left')
+const filter = document.getElementById('cat-filter')
+const loading = document.getElementById('updates-box-loading')
 
 // Variables for Pagination Functions
 let currentPage = 1
@@ -92,6 +93,9 @@ const createNewPage = posts => {
 }
 
 const getPageData = async filter => {
+    // show loading gif
+    loading.style.display = 'inline'
+
     const data = getPosts()
 
     data.then(posts => {
@@ -118,6 +122,9 @@ const getPageData = async filter => {
         toggleNavArrows(currentPage, numberOfPages, nextPageButton, previousPageButton)
 
         createNewPage(posts)
+
+        // remove loading gif
+        loading.style.display = 'none'
     })
 }
 
