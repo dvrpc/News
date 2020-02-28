@@ -17,6 +17,7 @@ let pageContents;
 let selectedCategory = 'View All'
 let length;
 
+
 /****** Get the Data ******/
 const getPosts = async () => {
     try{
@@ -51,6 +52,7 @@ const resetURI = () => {
 /****** New Page + Data Functions ******/
 // general function to create new page
 const createNewPage = posts => {
+    const loading = document.getElementById('updates-box-loading')
 
     // get the data for the page
     pageContents = makePage(posts, currentPage, postsPerPage)
@@ -80,6 +82,10 @@ const createNewPage = posts => {
 
                 // remove post identifier from URI
                 resetURI()
+
+                // hide loading gif
+                const loading = document.getElementById('updates-box-loading')
+                loading.style.display = 'none'
             }
             
             // update uri for link sharing (this is not intended to be a full routing solution)
@@ -201,6 +207,6 @@ const getLinkedPost = id => {
     })
 }
 
-// load homepage or a specific post depending on URL (again: not a routing solution just a way to share links)
+// load homepage or a specific post depending on URL (note: this is not a routing solution it's just a way to share links)
 const postCheck = location.href.split('?post=')[1]
 postCheck ? getLinkedPost(postCheck) : getPageData()
