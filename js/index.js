@@ -52,8 +52,6 @@ const resetURI = () => {
 /****** New Page + Data Functions ******/
 // general function to create new page
 const createNewPage = posts => {
-    const loading = document.getElementById('updates-box-loading')
-
     // get the data for the page
     pageContents = makePage(posts, currentPage, postsPerPage)
 
@@ -180,6 +178,10 @@ const noPosts = () => {
 
 // fake routing by giving people the ability to share links
 const getLinkedPost = id => {
+    // hide loading gif
+    const loading = document.getElementById('updates-box-loading')
+    loading.style.display = 'none'
+
     id = parseInt(id)
     const data = getSpecificPost(id)
 
