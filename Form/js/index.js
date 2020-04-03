@@ -81,8 +81,7 @@ const makePost = async (data, endpoint, method) => {
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Access-Control-Allow-Origin': 'https://alpha.dvrpc.org/'
+                'Accept': 'application/json'
             },
             body: JSON.stringify(data)
         }
@@ -233,7 +232,6 @@ const formatInputs = e => {
                 postData.img = safeValue
                 break
             case 'type':
-                console.log('post data type value ', safeValue)
                 postData.type = safeValue
                 break
             default:
@@ -268,7 +266,7 @@ const handleImgEdit = e => {
     // handle button clicks (ignore if user clicks the div but not one of the buttons)
     switch(btnName) {
         case 'yes':
-            const imgInput = `<input required type="file" name="img" id="img" accept="image/png, image/jpeg">`
+            const imgInput = `<input required type="file" name="img" id="img" accept="image/png, image/jpeg, image/jpg">`
             const editImgWrapper = e.target.parentElement
             const editImgLabel = editImgWrapper.previousElementSibling
         
