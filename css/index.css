@@ -212,12 +212,11 @@ body{
     }
     #detail-view-title{
         margin-left: 5%;
-        text-align: center;
+        text-align: right;
         font-size: 1.3rem;
     }
     #detail-view-img{
-        float: none;
-        margin: 8% auto;
+        margin: 6% auto 4% 4%;
     }
 
     /* Connect With Us */
