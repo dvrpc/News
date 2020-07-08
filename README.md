@@ -1,5 +1,5 @@
 # DVRPC Newsroom
-DVRPC proudly serves as a resource for the region's media, sharing information about our work to improve mobility, the environment, and quality-of-life in Greater Philadelphia. In order to provide quick updates in a bite size format, we have created this blog for our <a href="www.dvrpc.org/Newsroom">Newsroom webpage</a>. This repo houses the entire project, including the public facing newsroom page, the CMS and a node.js back end to connect the two.
+DVRPC proudly serves as a resource for the region's media, sharing information about our work to improve mobility, the environment, and quality-of-life in Greater Philadelphia. In order to provide quick updates in a bite size format, we have created this blog for our <a href="https://www.dvrpc.org/Newsroom/">Newsroom webpage</a>. This repo houses the entire project, including the public facing newsroom page, the CMS and a node.js back end to connect the two.
 
 ## Development
 The bulk of this product is developed with vanilla HTML, CSS and Javascript. The rich text editor <a href="https://quilljs.com/">QuillJS</a> was used to help handle text for the CMS. <a href="https://nodejs.org/en/">Node</a>, <a href="https://expressjs.com/">Express</a> and <a href="https://www.postgresql.org/">PostgreSQL</a> were used to make the back end. 
