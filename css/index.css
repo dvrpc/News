@@ -7,14 +7,11 @@ body{
 }
 .nav-arrow {
     border: none;
-    background: #a1a1a1;
-    color: #fff;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    font-weight: 900;
-    /* the unicode jawn isnt vertically centered but this kinda shims it */
-    padding: 0px 13px 3px 13px;
-    line-height: normal;
+    background: none;
+    width: 52px;
+    height: 50px;
+    background-image: url("../img/right-gray.png");
+    background-repeat: no-repeat;
 }
 .nav-arrow:hover{
     background: #03688D;
