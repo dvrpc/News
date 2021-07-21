@@ -131,6 +131,7 @@ body{
     border: none;
     background: none;
     padding: 0;
+    cursor: pointer;
 }
 #detail-view-copy-btn img{
     margin-right: 5px;
