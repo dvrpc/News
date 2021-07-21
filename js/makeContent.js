@@ -142,15 +142,16 @@ const createDetailView = (post, typeImages, updatesBox) => {
     img.id = 'detail-view-img'
     detailViewLink.id = "detail-view-link"
     copyLinkBtn.id = 'detail-view-copy-btn'
+
     img.classList.add('updates-item-img')
     img.classList.add('detail-view-img')
     imgType.classList.add('updates-item-img-type')
     imgType.classList.add('detail-view-img-type')
     detailViewLeftArrow.classList.add('nav-arrow')
+    detailViewLeftArrow.classList.add('nav-arrow-left')
 
     // add the content
     detailViewTitle.textContent = `${datePosted} | ${post.title}`
-    detailViewLeftArrow.textContent = '\u2039'
     img.style.backgroundImage = `url('${post.img}')`
 
     imgType.src = typeImages[post.type]

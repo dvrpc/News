@@ -7,17 +7,23 @@ body{
 }
 .nav-arrow {
     border: none;
-    background: #a1a1a1;
-    color: #fff;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    font-weight: 900;
-    /* the unicode jawn isnt vertically centered but this kinda shims it */
-    padding: 0px 13px 3px 13px;
-    line-height: normal;
+    background: none;
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
+    cursor: pointer;
 }
-.nav-arrow:hover{
-    background: #03688D;
+.nav-arrow-right {
+    background-image: url("../img/right-gray.png");
+}
+.nav-arrow-left {
+    background-image: url("../img/left-gray.png");
+}
+.nav-arrow-right:hover{
+    background-image: url("../img/right-blue.png");
+}
+.nav-arrow-left:hover{
+    background-image: url("../img/left-blue.png");
 }
 
 /******* Main content box *******/
@@ -125,6 +131,7 @@ body{
     border: none;
     background: none;
     padding: 0;
+    cursor: pointer;
 }
 #detail-view-copy-btn img{
     margin-right: 5px;
