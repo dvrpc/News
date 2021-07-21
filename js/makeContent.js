@@ -105,14 +105,23 @@ const createPost = (post, typeImages, updatesBox) => {
 INPUT:
     - Post Img  (detail-view-img srce)
     - Post Title (detail-view-title textContent)
+    - Post Author (details-view-author)
     - Post Link (posted location of resource)
     - Synopsis (paragraph(s) textContent)
 
 OUTPUT:
     <div id="detail-view-container">
         <button id="detail-view-left" class="nav-arrow nav-arrow-left"></button>
-        <img id="detail-view-img" src="">
-        <h2 id="detail-view-title"></h2>
+        <div class="detail-view-header">
+            <div class="detail-view-header-text">
+                <h2 id="detail-view-title"></h2>
+                <div class="detail-view-author">
+                    <span>by <b>author</b></span>
+                    <span>date</span>
+                </div>
+            </div>
+            <img id="detail-view-img" src="">
+        </div>
         <p></p>
         <button id="details-view-copy-btn">SHARE</button>
         <a id="detail-view-link" href="">Learn More</a>
