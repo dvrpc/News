@@ -8,13 +8,22 @@ body{
 .nav-arrow {
     border: none;
     background: none;
-    width: 52px;
+    width: 55px;
     height: 50px;
-    background-image: url("../img/right-gray.png");
     background-repeat: no-repeat;
+    cursor: pointer;
 }
-.nav-arrow:hover{
-    background: #03688D;
+.nav-arrow-right {
+    background-image: url("../img/right-gray.png");
+}
+.nav-arrow-left {
+    background-image: url("../img/left-gray.png");
+}
+.nav-arrow-right:hover{
+    background-image: url("../img/right-blue.png");
+}
+.nav-arrow-left:hover{
+    background-image: url("../img/left-blue.png");
 }
 
 /******* Main content box *******/
