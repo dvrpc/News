@@ -122,6 +122,7 @@ body{
     flex-direction: column;
     justify-content: space-between;
     width: 70%;
+    margin-right: 1%;
 }
 .detail-view-author {
     display: flex;

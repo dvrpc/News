@@ -1,10 +1,9 @@
 /****** Helper functions ******/
 const formatDate = createdAt => {
     const dateObj = new Date(createdAt)
-    const month = dateObj.getMonth() + 1
-    const day = dateObj.getDate()
-    const year = dateObj.getFullYear().toString().substring(2)
-    const datePosted = `${month}/${day}/${year}`
+    const month = dateObj.toLocaleString('default', {month: 'long'})
+    const year = dateObj.getFullYear()
+    const datePosted = `${month} ${year}`
 
     return datePosted
 }
