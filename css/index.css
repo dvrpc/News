@@ -240,4 +240,8 @@ body{
     .vr {
         height: 23px;
     }
+
+    .connect-imgs {
+        width: 70%;
+    }
 }
