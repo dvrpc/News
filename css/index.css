@@ -106,12 +106,12 @@ body{
     position: relative;
     height: 100%;
     width: 100%;
-    padding: 3% 10%;
+    padding: 3% 7%;
 }
 .detail-view-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 3%;
+    margin-bottom: 6%;
 }
 #detail-view-title{
     margin: 0;
@@ -129,6 +129,9 @@ body{
     justify-content: space-between;
     color: grey;
     border-bottom: 2px solid grey;
+    font-size: 0.9rem;
+    /* account for bottom: -10px from img-type overlay */
+    margin-top: 10px;
 }
 .detail-view-img{
     position: relative;
