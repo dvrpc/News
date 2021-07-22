@@ -120,7 +120,7 @@ OUTPUT:
                     <span>date</span>
                 </div>
             </div>
-            <img id="detail-view-img" src="">
+            <img class="detail-view-img" src="">
         </div>
         <p></p>
         <button id="details-view-copy-btn">SHARE</button>
@@ -156,7 +156,6 @@ const createDetailView = (post, typeImages, updatesBox) => {
     detailViewContainer.id = 'detail-view-container'
     detailViewLeftArrow.id = 'detail-view-left'
     detailViewTitle.id = 'detail-view-title'
-    img.id = 'detail-view-img'
     detailViewLink.id = "detail-view-link"
     copyLinkBtn.id = 'detail-view-copy-btn'
 
@@ -173,7 +172,7 @@ const createDetailView = (post, typeImages, updatesBox) => {
 
     // add the content
     detailViewTitle.textContent = post.title
-    detailViewAuthor.textContent = post.author || 'DVRPC'
+    detailViewAuthor.innerHTML = `by <b>${post.author || 'DVRPC'}</b>`
     detailViewDatePublished.textContent = datePosted
     img.style.backgroundImage = `url('${post.img}')`
 
