@@ -98,13 +98,8 @@ body{
     margin: 0 auto;
     font-size: 1rem;
 }
-.detail-view-img{
-    position: relative;
-}
-.detail-view-img-type{
-    position: absolute;
-    bottom: -10px;
-}
+
+
 
 /******* Updates Box Detail View  *******/
 #detail-view-container{
@@ -113,12 +108,33 @@ body{
     width: 100%;
     padding: 3% 10%;
 }
+.detail-view-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3%;
+}
 #detail-view-title{
-    margin: 0;
-    margin-top: 10px;
+    font-size: 1.25rem;
+}
+.detail-view-header-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 70%;
+}
+.detail-view-author {
+    display: flex;
+    justify-content: space-between;
+}
+.detail-view-img{
+    position: relative;
+}
+.detail-view-img-type{
+    position: absolute;
+    bottom: -10px;
 }
 #detail-view-img{
-    margin: 3% 0 3% 3%;
+    /* margin: 3% 0 3% 3%; */
     float: right;
     width: 145px;
     height: 115px;

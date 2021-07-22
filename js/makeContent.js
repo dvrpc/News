@@ -126,7 +126,8 @@ OUTPUT:
         <button id="details-view-copy-btn">SHARE</button>
         <a id="detail-view-link" href="">Learn More</a>
     </div>     
-*/ 
+*/
+
 const createDetailView = (post, typeImages, updatesBox) => {
 
     // extract date posted and format it as mm/dd/yy
@@ -136,6 +137,13 @@ const createDetailView = (post, typeImages, updatesBox) => {
     const fragment = document.createDocumentFragment()
     const detailViewContainer = document.createElement('div')
     const detailViewLeftArrow = document.createElement('button')
+    
+    const detailViewHeader = document.createElement('div')
+    const detailViewHeaderText = document.createElement('div')
+    const detailViewAuthorSection = document.createElement('div')
+    const detailViewAuthor = document.createElement('span')
+    const detailViewDatePublished = document.createElement('span')
+
     const detailViewTitle = document.createElement('h2')
     const img = document.createElement('div')
     const imgType = document.createElement('img')
@@ -152,6 +160,10 @@ const createDetailView = (post, typeImages, updatesBox) => {
     detailViewLink.id = "detail-view-link"
     copyLinkBtn.id = 'detail-view-copy-btn'
 
+    detailViewHeader.classList.add('detail-view-header')
+    detailViewHeaderText.classList.add('detail-view-header-text')
+    detailViewAuthorSection.classList.add('detail-view-author')
+
     img.classList.add('updates-item-img')
     img.classList.add('detail-view-img')
     imgType.classList.add('updates-item-img-type')
@@ -160,7 +172,9 @@ const createDetailView = (post, typeImages, updatesBox) => {
     detailViewLeftArrow.classList.add('nav-arrow-left')
 
     // add the content
-    detailViewTitle.textContent = `${datePosted} | ${post.title}`
+    detailViewTitle.textContent = post.title
+    detailViewAuthor.textContent = post.author || 'DVRPC'
+    detailViewDatePublished.textContent = datePosted
     img.style.backgroundImage = `url('${post.img}')`
 
     imgType.src = typeImages[post.type]
@@ -178,10 +192,17 @@ const createDetailView = (post, typeImages, updatesBox) => {
 
     // append children
     img.appendChild(imgType)
+
+    detailViewHeader.appendChild(detailViewHeaderText)
+    detailViewHeaderText.appendChild(detailViewTitle)
+    detailViewHeaderText.appendChild(detailViewAuthorSection)
+    detailViewAuthorSection.appendChild(detailViewAuthor)
+    detailViewAuthorSection.appendChild(detailViewDatePublished)
+
+    detailViewHeader.appendChild(img)
     copyLinkBtn.insertAdjacentElement('afterbegin', copyLinkImg)
     fragment.appendChild(detailViewLeftArrow)
-    fragment.appendChild(detailViewTitle)
-    fragment.appendChild(img)
+    fragment.appendChild(detailViewHeader)
     fragment.appendChild(detailViewParagraphWrapper)
     fragment.appendChild(copyLinkBtn)
     fragment.appendChild(detailViewLink)
