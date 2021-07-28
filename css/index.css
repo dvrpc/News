@@ -2,6 +2,10 @@
 body{
     font-size: 16px;
 }
+a {
+    /* compensate for inline color: rgb(17, 85, 204) that appears for unknown reasons (possibly Quill) */
+    color: #03688D !important;
+}
 .shadow{
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
@@ -128,7 +132,7 @@ body{
     display: flex;
     justify-content: space-between;
     color: grey;
-    border-bottom: 2px solid grey;
+    border-bottom: 1px solid grey;
     font-size: 0.9rem;
     /* account for bottom: -10px from img-type overlay */
     margin-top: 10px;
