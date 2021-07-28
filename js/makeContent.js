@@ -85,7 +85,7 @@ const createPost = (post, typeImages, updatesBox) => {
     img.style.backgroundImage = `url('${post.img}')`
     imgType.src = typeImages[post.type]
     imgType.alt = `${post.type} post`
-    title.textContent = `${datePosted} | ${post.title}`
+    title.insertAdjacentHTML('afterbegin', `<span>${post.title} <br /> <small>${datePosted}</small></span>`)
 
     // append to jawns
     imgContainer.appendChild(img)
