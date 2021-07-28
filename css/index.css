@@ -179,7 +179,8 @@ a {
 }
 #detail-view-left{
     position: absolute;
-    top: 25px;
+    /* 3% = container padding top */
+    top: 3%;
     left: 0;
 }
 
