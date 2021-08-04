@@ -12,6 +12,7 @@ api.post('/addPost', (req, res, next) => {
             title: post.title,
             link: post.link,
             img: post.img,
+            author: post.author,
             blurb: post.blurb,
             type: post.type
         })

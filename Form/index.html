@@ -44,6 +44,7 @@
                 <li><strong>Type: </strong> The type of post i.e. "Press Release"</li>
                 <li><strong>Link: </strong> The URL for the post content i.e. "https://www.dvrpc.org/trails/regionaltrailsprogram/"</li>
                 <li><strong>Image: </strong>Select an image to use as a background. Please try to limit image size to <strong>200x200</strong> or smaller</li>
+                <li><strong>Author: </strong> Author of the article. Defaults to DVRPC if no author is provided.</li>
                 <li><strong>Blurb: </strong> The text description for the post. No real limit on length but should be at least TBD words long</li>
             </ul>
         </section>
@@ -82,6 +83,11 @@
                 <fieldset name="img" form="news-form">
                     <label for="img">Image: </label>
                     <input required type="file" name="img" id="img" accept="image/png, image/jpeg">
+                </fieldset>
+
+                <fieldset name="author" form="news-form">
+                    <label for="author">Author: </label>
+                    <input type="text" name="author" id="author">
                 </fieldset>
                 
                 <fieldset name="blurb" form="news-form">

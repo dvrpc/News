@@ -26,7 +26,7 @@ const createQuill = el => {
                 ['bold', 'italic', 'underline', 'link']
             ]
         },
-        placeholder: 'Enter text right hurrrr',
+        placeholder: 'Enter story text here. Formatting available as part of the text box. New lines create new paragraphs.',
         theme: 'snow'
     })
 }
@@ -201,7 +201,7 @@ const deleteEntry = async id => {
 
     if(stream.status === 204){
         alert('Succesfully deleted the post')
-        window.location.reload(true)
+        Location.reload(true)
     }else{
         alert('Failed to delete')
     }
@@ -233,6 +233,9 @@ const formatInputs = e => {
                 break
             case 'type':
                 postData.type = safeValue
+                break
+            case 'author':
+                postData.author = safeValue
                 break
             default:
                 console.log('suh dude')
@@ -338,7 +341,12 @@ const createEditFormAndHandleUserInput = response => {
             </div>
         </fieldset>
 
-        <fieldset name="blurb" form="news-form">
+        <fieldset name="author" form="edit-form">
+            <label for="author">Author: </label>
+            <input type="text" name="author" id="author">
+        </fieldset>
+
+        <fieldset name="blurb" form="edit-form">
             <label for="blurb">Blurb: </label>
             <div id="editor-wrapper-2">
                 <div id="editor-2"></div>
