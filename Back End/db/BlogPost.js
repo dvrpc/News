@@ -12,6 +12,10 @@ module.exports = db.define('BlogPost', {
         type: STRING,
         allowNull: false
     },
+    author: {
+        type: STRING,
+        allowNull: true
+    },
     img: {
         type: TEXT,
         allowNull: false
